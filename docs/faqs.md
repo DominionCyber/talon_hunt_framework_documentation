@@ -16,9 +16,7 @@ Yes. Talon Hunt Framework is open source and free to use. Refer to the repositor
 
 ### Is Talon Hunt Framework Enterprise available?
 
-Yes. Enterprise support and additional offerings are available. Contact **talon@dominioncyber.net** for more information.
-
----
+Yes. Enterprise support and additional offerings are available. Contact talon@dominioncyber.net for more information.
 
 ## Compatibility
 
@@ -36,16 +34,14 @@ At minimum, users must have permissions to create and manage saved searches with
 
 If deploying content via the API, additional permissions and API scopes are required, including:
 
-- `NGSIEM Saved Queries` (write access)
-- `NGSIEM Lookup Files` (write access, if deploying lookup tables)
-
----
+- NGSIEM Saved Queries (write access)
+- NGSIEM Lookup Files (write access, if deploying lookup tables)
 
 ## Usage
 
 ### How do I import Talon searches into Falcon?
 
-Refer to the [Getting Started](/getting-started) guide for documented installation paths, including Web GUI and API-based deployment.
+Refer to the Getting Started guide for documented installation paths, including Web GUI and API-based deployment.
 
 ### Can I modify the queries?
 
@@ -70,13 +66,11 @@ Content is organized into functional groupings such as:
 
 Yes. Talon is designed to support detection-as-code workflows. The repository can be integrated into CI/CD pipelines for review, version control, and automated deployment.
 
----
-
 ## Troubleshooting
 
 ### A query is not returning results. What should I check?
 
-- Data availability: Confirm your tenant is ingesting the required event types (example: `ProcessRollup2`, `NetworkConnect`).
+- Data availability: Confirm your tenant is ingesting the required event types (example: ProcessRollup2, NetworkConnect).
 - Time range: Expand the search window for low-frequency activity.
 - Field validity: CrowdStrike event schemas may vary across sensor versions.
 - Permissions: Ensure your account has access to the relevant datasets.
@@ -89,15 +83,13 @@ If uploading via YAML, validate that the file adheres to the LogScale schema spe
 
 https://schemas.humio.com/query/v0.6.0
 
----
-
 ## Contributing
 
 ### How can I contribute?
 
 Contributions are welcome. If a contributing guide is published in the repository, follow the documented submission and pull request workflow.
 
-If you do not have a contributing URL available yet, consider adding a `CONTRIBUTING.md` file at the repository root.
+If you do not have a contributing URL available yet, consider adding a CONTRIBUTING.md file at the repository root.
 
 ### I found a bug or have a feature request.
 
