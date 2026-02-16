@@ -1,0 +1,34 @@
+:root {
+  /* Fonts */
+  --vp-font-family-base: 'Heebo', sans-serif;
+  --vp-font-family-headings: 'Oxanium', sans-serif;
+
+  /* Dominion Cyber Color Palette */
+  --dc-black: #04090E;
+  --dc-warm-black: #0E1216;
+  --dc-purpur: #8425FA;
+  --dc-pink: #FF6BFF;
+  --dc-light-gray: #E2E2E6;
+  
+  /* VitePress Overrides */
+  --vp-c-brand-1: var(--dc-purpur);
+  --vp-c-brand-2: var(--dc-pink);
+  --vp-c-brand-3: #62666F;
+  
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, var(--dc-purpur) 30%, var(--dc-pink));
+}
+
+/* Force Dark Mode aesthetic by default */
+html:not(.dark) {
+  --vp-c-bg: var(--dc-black);
+  --vp-c-bg-alt: var(--dc-warm-black);
+  --vp-c-text-1: var(--dc-light-gray);
+  --vp-c-text-2: #9CA3AF;
+}
+
+/* Apply Oxanium to headings */
+h1, h2, h3, h4, h5, h6, .title {
+  font-family: var(--vp-font-family-headings) !important;
+  text-transform: uppercase; /* Optional: gives it that cyber-tech feel */
+}
