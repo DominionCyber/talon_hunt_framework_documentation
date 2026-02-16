@@ -31,7 +31,7 @@ export default defineConfig({
       {
         text: 'Overview',
         items: [
-          { text: 'Introduction', link: '/introduction' },
+          { text: 'Specification', link: '/specification' },
           { text: 'Getting Started', link: '/getting-started' },
           { text: 'FAQs', link: '/faqs' },
         ],
