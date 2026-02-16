@@ -31,7 +31,7 @@ export default defineConfig({
       {
         text: 'Overview',
         items: [
-          { text: 'Specification', link: '/specification' },
+          { text: 'Introduction', link: '/introduction' },
           { text: 'Getting Started', link: '/getting-started' },
           { text: 'FAQs', link: '/faqs' },
         ],
@@ -39,10 +39,10 @@ export default defineConfig({
       {
         text: 'THF Basics',
         items: [
-          { text: 'Core Functions', link: '/basics/core-functions' },
-          { text: 'Cradles', link: '/basics/cradles' },
-          { text: 'Lookups', link: '/basics/lookups' },
-          { text: 'Transforms', link: '/basics/transforms' },
+          { text: 'Specification', link: '/specification' },
+          { text: 'Cradles', link: 'cradles' },
+          { text: 'Lookups', link: 'lookups' },
+          { text: 'Transforms', link: 'transforms' },
         ],
       },
     ],
