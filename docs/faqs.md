@@ -8,11 +8,15 @@ Talon Hunt Framework is a curated collection of CrowdStrike Query Language (CQL)
 
 ### Who maintains Talon?
 
-Talon is developed and maintained by [Dominion Cyber](https://github.com/DominionCyber).
+Talon is developed and maintained by Dominion Cyber.
 
 ### Is Talon free to use?
 
-Yes. Talon Hunt Framework is open source and free to use. See the repository's license file for details.
+Yes. Talon Hunt Framework is open source and free to use. Refer to the repository license file for usage and distribution terms.
+
+### Is Talon Hunt Framework Enterprise available?
+
+Yes. Enterprise support and additional offerings are available. Contact **talon@dominioncyber.net** for more information.
 
 ---
 
@@ -20,15 +24,20 @@ Yes. Talon Hunt Framework is open source and free to use. See the repository's l
 
 ### Which CrowdStrike modules does Talon support?
 
-Talon is designed primarily for use with **Falcon Insight** (EDR) and the **Event Search** / **Investigate** capabilities. Some queries may also be applicable to **Falcon OverWatch** and **Falcon Discover** depending on your subscription.
+Talon is designed primarily for Falcon Insight (EDR) and the Event Search / Investigate workflow. Some content may also apply to Falcon OverWatch and Falcon Discover depending on licensing and telemetry availability.
 
 ### Does Talon work with other EDR platforms?
 
-No. Talon is purpose-built for CrowdStrike Falcon and uses CrowdStrike Query Language (CQL). It is not compatible with other EDR platforms without significant modification.
+No. Talon is purpose-built for CrowdStrike Falcon and relies on CrowdStrike Query Language (CQL). It is not directly portable to other platforms without significant rewriting.
 
 ### What Falcon permissions do I need?
 
-You'll need permissions to create and manage saved searches within your Falcon tenant. Typically this requires the **Falcon Analyst** or **Falcon Admin** role, depending on your organization's RBAC configuration.
+At minimum, users must have permissions to create and manage saved searches within their Falcon tenant. This is commonly granted through Falcon Analyst or Falcon Admin roles, depending on RBAC configuration.
+
+If deploying content via the API, additional permissions and API scopes are required, including:
+
+- `NGSIEM Saved Queries` (write access)
+- `NGSIEM Lookup Files` (write access, if deploying lookup tables)
 
 ---
 
@@ -36,34 +45,49 @@ You'll need permissions to create and manage saved searches within your Falcon t
 
 ### How do I import Talon searches into Falcon?
 
-See the [Getting Started](/getting-started) guide for step-by-step import instructions.
+Refer to the [Getting Started](/getting-started) guide for documented installation paths, including Web GUI and API-based deployment.
 
 ### Can I modify the queries?
 
-Absolutely. Talon is designed to be a starting point. You're encouraged to customize queries to fit your environment, telemetry, and operational requirements.
+Yes. Talon is intended as a baseline framework. Organizations are encouraged to tailor queries to their environment, telemetry, and operational requirements.
 
 ### How are queries organized?
 
-Queries follow a consistent naming convention: `[CATEGORY]-[MITRE_TACTIC]-[SHORT_DESCRIPTION]`. They are organized into folders by workflow type (hunts, detections, response, compliance). See [About Talon Hunt Framework](/about) for more details.
+Queries follow a consistent naming convention:
+
+```
+[CATEGORY]-[MITRE_TACTIC]-[SHORT_DESCRIPTION]
+```
+
+Content is organized into functional groupings such as:
+
+- Core searches
+- Transforms
+- Lookups
+- Cradles (building blocks)
 
 ### Can I use Talon in a CI/CD pipeline?
 
-Yes. Talon is designed with version control and CI/CD in mind. You can integrate the repository into your existing detection-as-code workflows using Git and your preferred CI/CD tooling.
+Yes. Talon is designed to support detection-as-code workflows. The repository can be integrated into CI/CD pipelines for review, version control, and automated deployment.
 
 ---
 
 ## Troubleshooting
 
-### A query isn't returning results. What should I check?
+### A query is not returning results. What should I check?
 
-- **Data availability:** Ensure your Falcon tenant is collecting the relevant event types (e.g., `ProcessRollup2`, `NetworkConnect`).
-- **Time range:** Widen your search window — some events may be infrequent.
-- **Field names:** CrowdStrike occasionally updates field names across sensor versions. Verify field names match your current sensor version.
-- **Permissions:** Confirm your account has access to the data sources referenced in the query.
+- Data availability: Confirm your tenant is ingesting the required event types (example: `ProcessRollup2`, `NetworkConnect`).
+- Time range: Expand the search window for low-frequency activity.
+- Field validity: CrowdStrike event schemas may vary across sensor versions.
+- Permissions: Ensure your account has access to the relevant datasets.
 
-### I'm getting a syntax error on import.
+### I am getting a syntax error on import.
 
-Ensure you're importing the correct file format expected by your Falcon module. If copying queries manually, check for encoding issues or trailing whitespace that may have been introduced during copy-paste.
+Ensure the query syntax is valid CQL and matches the expected import format. When copying queries manually, confirm that no encoding or formatting issues were introduced.
+
+If uploading via YAML, validate that the file adheres to the LogScale schema specification:
+
+https://schemas.humio.com/query/v0.6.0
 
 ---
 
@@ -71,8 +95,12 @@ Ensure you're importing the correct file format expected by your Falcon module. 
 
 ### How can I contribute?
 
-We welcome contributions! Please review the `CONTRIBUTING.md` file in the repository for submission guidelines, coding standards, and the pull request process.
+Contributions are welcome. If a contributing guide is published in the repository, follow the documented submission and pull request workflow.
+
+If you do not have a contributing URL available yet, consider adding a `CONTRIBUTING.md` file at the repository root.
 
 ### I found a bug or have a feature request.
 
-Please open an [issue on GitHub](https://github.com/DominionCyber/talon_hunt_framework_documentation/issues) with a clear description and, if applicable, steps to reproduce.
+Please open an issue on GitHub with a clear description and, if applicable, steps to reproduce:
+
+https://github.com/DominionCyber/talon_hunt_framework/issues
