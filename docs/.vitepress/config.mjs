@@ -23,20 +23,24 @@ export default defineConfig({
       {
         text: 'Overview',
         items: [
-          { text: 'Introduction', link: '/introduction' },
-          { text: 'About', link: '/about' }
+          { text: 'About', link: '/about' },
+          { text: 'Getting Started', link: '/getting-started' }
+          { text: 'FAQs', link: '/faqs' }
         ]
       },
       {
-        text: 'Usage',
+        text: 'THF Basics',
         items: [
-          { text: 'Getting Started', link: '/getting-started' },
-          { text: 'FAQs', link: '/faqs' }
+          { text: 'Core Functions', link: '/basics/core-functions' },
+          { text: 'Cradles', link: '/basics/cradles' },
+          { text: 'Lookups', link: '/basics/lookups' },
+          { text: 'Transforms', link: '/basics/transforms' },
+          
         ]
       }
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework_documentation/' }
+      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework' }
     ]
   }
 })
