@@ -43,3 +43,151 @@ h1, h2, h3, h4, h5, h6, .title {
     height: 26px;
   }
 }
+
+/* ── FAQ Accordion ────────────────────────────────────── */
+
+.faq-section {
+  margin-bottom: 2rem;
+}
+
+.faq-section h2 {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dc-purpur);
+  border: none;
+  padding-bottom: 0;
+  margin-bottom: 0.75rem;
+}
+
+.faq-item {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--vp-c-bg-alt);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.faq-item:hover {
+  border-color: #2d3548;
+}
+
+.faq-item[open] {
+  border-color: var(--dc-purpur);
+  box-shadow: 0 0 18px rgba(132, 37, 250, 0.12);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 16px 20px;
+  font-family: var(--vp-font-family-base);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  list-style: none;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.faq-item summary::-webkit-details-marker,
+.faq-item summary::marker {
+  display: none;
+  content: '';
+}
+
+/* Custom chevron icon via pseudo-element */
+.faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  font-family: 'Oxanium', monospace;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--vp-c-text-2);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.faq-item[open] summary::after {
+  content: '−';
+  transform: rotate(0deg);
+  background: rgba(132, 37, 250, 0.15);
+  color: var(--dc-purpur);
+}
+
+.faq-item summary:hover {
+  color: #fff;
+}
+
+/* Answer body */
+.faq-item > *:not(summary) {
+  padding: 0 20px 16px;
+  font-size: 0.9rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.75;
+}
+
+.faq-item p {
+  margin: 0 0 8px;
+}
+
+.faq-item p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-item ul {
+  margin: 8px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.faq-item ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 4px;
+}
+
+.faq-item ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dc-purpur);
+  opacity: 0.6;
+}
+
+.faq-item a {
+  color: var(--dc-purpur);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.faq-item a:hover {
+  border-bottom-color: var(--dc-purpur);
+}
+
+.faq-item code {
+  font-size: 0.82rem;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-border);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--dc-pink);
+}
+
+.faq-item div[class*="language-"] {
+  margin: 8px 0 !important;
+}
