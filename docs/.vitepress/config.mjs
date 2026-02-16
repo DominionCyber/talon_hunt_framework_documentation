@@ -10,7 +10,8 @@ export default defineConfig({
     ['link', { href: 'https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Oxanium:wght@400;500;600;700&display=swap', rel: 'stylesheet' }]
   ],
   themeConfig: {
-    logo: '', 
+    logo: 'dc-long-white.png',
+    siteTitle: false,
     // Top Navigation Bar
     nav: [
       { text: 'Home', link: '/' },
