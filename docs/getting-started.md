@@ -2,60 +2,94 @@
 
 ## Prerequisites
 
-Before using Talon Hunt Framework, ensure you have the following:
+Before deploying the Talon Hunt Framework, ensure the following requirements are met:
 
-- **CrowdStrike Falcon** access with appropriate permissions to import saved searches.
-- **Falcon Insight** or **Falcon OverWatch** module enabled (depending on your use case).
-- Familiarity with **CrowdStrike Query Language (CQL)** basics.
+- Access to CrowdStrike Falcon with sufficient permissions to create and manage saved searches.
+- Falcon Insight or Falcon OverWatch enabled, depending on operational requirements.
+- Working familiarity with CrowdStrike Query Language (CQL) fundamentals.
+- If deploying YAML content or lookup tables via the API, you must have write access to the following API scopes:
+  - `NGSIEM Saved Queries`
+  - `NGSIEM Lookup Files`
 
-## Installation
+## Installation Overview
 
-Talon requires no external installation. It operates entirely within CrowdStrike Falcon.
+Talon Hunt Framework operates entirely within CrowdStrike Falcon and does not require external runtime dependencies.
 
-### Step 1: Clone or Download the Repository
+There are three documented installation methods:
 
-Download the Talon Hunt Framework repository from GitHub:
+1. Web GUI (manual deployment)
+2. Direct API request
+3. Dominion Cyber Installation Tool
 
-```bash
-git clone https://github.com/DominionCyber/talon_hunt_framework_documentation.git
+While API and tool-based deployments rely on external mechanisms for content import, Talon can be fully deployed using only GUI access if necessary.
+
+## Installation Method 1: Web GUI Deployment
+
+> [!WARNING]
+> The Web GUI method is the least preferred deployment approach. Use it when API credentials cannot be obtained due to internal restrictions, or when granular manual control is required for customization. API-based deployment provides better consistency and repeatability.
+
+> [!WARNING]
+> YAML files cannot be uploaded directly through the Falcon console. YAML-based saved searches must be deployed via a `POST` request to:
+>
+> `/ngsiem-content/entities/savedqueries-template/v1`
+
+### Step 1: Log in to the CrowdStrike Console
+
+Authenticate to your Falcon instance using an account with saved search creation privileges.
+
+### Step 2: Navigate to Advanced Event Search
+
+Navigate to:
+
+```
+Investigate → Advanced Event Search
 ```
 
-Or download the ZIP archive directly from the [releases page](https://github.com/DominionCyber/talon_hunt_framework_documentation/releases).
+### Step 3: Select the Appropriate View
 
-### Step 2: Import Saved Searches into Falcon
+Change your current view to the desired workspace.
 
-1. Log in to your **CrowdStrike Falcon** console.
-2. Navigate to **Investigate → Custom Saved Searches** (or the relevant module).
-3. Use the **Import** function to load the `.json` or `.cql` files from the Talon repository.
-4. Verify the imported searches appear in your saved searches list.
+Best practice is to store Talon Hunt Framework saved searches in the Falcon view for consistency and centralization. However, searches may be stored in any view appropriate for your operational model.
 
-::: tip
-Start with a small subset of queries (e.g., one MITRE tactic category) to validate the import process before loading the full framework.
-:::
+### Step 4: Execute the Query
 
-### Step 3: Validate Your Queries
+1. Open the provided YAML file.
+2. Copy the CQL query syntax.
+3. Paste the query into the Advanced Event Search query bar.
+4. Execute the search.
 
-After importing, run a few queries against your environment to confirm they execute correctly:
+Note: Cradles do not need to be saved as standalone searches. Cradles function as foundational building blocks intended for reuse within higher-level detection or hunting queries.
 
-```sql
--- Example: Hunt for scheduled task creation events
-event_simpleName=ProcessRollup2
-| FileName IN ("schtasks.exe", "at.exe")
-| stats count by ComputerName, CommandLine
-| sort -count
-```
+### Step 5: Save the Query
 
-::: warning
-Some queries may need adjustment based on your Falcon module version, data retention settings, or custom field configurations.
-:::
+1. Under My Recents, locate the query you just executed.
+2. Hover over the entry and select the three-dot menu.
+3. Click Save.
 
-### Step 4: Organize and Customize
+### Step 6: Configure Saved Search Metadata
 
-- **Tag** imported searches with your team's internal taxonomy.
-- **Modify** queries as needed to match your environment's unique telemetry.
-- **Schedule** recurring hunts for continuous coverage.
+In the Save Search dialog:
 
-## What's Next?
+- Enter the appropriate name.
+- Provide a structured description.
+- Apply relevant labels consistent with Talon naming conventions.
 
-- Read the [About Talon Hunt Framework](/about) page for details on framework architecture and naming conventions.
-- Check the [FAQs](/faqs) for common questions and troubleshooting.
+Click Save to finalize.
+
+### Step 7: Repeat for Core Content
+
+Repeat this process for all critical saved searches. This includes all saved searches located in the root directories of:
+
+- `core`
+- `transforms`
+- `lookups` (optional, depending on operational need)
+
+### Step 8: Upload Lookup Tables (Optional)
+
+If utilizing lookup-based enrichment:
+
+1. Navigate to the Lookup management interface.
+2. Upload the corresponding lookup files.
+3. Validate successful ingestion before executing dependent queries.
+
+For automated and repeatable deployments, API-based installation or the Dominion Cyber Installation Tool is strongly recommended.
