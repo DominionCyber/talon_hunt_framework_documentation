@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Explore the Framework
-      link: /guide/introduction
+      link: /introduction
     - theme: alt
       text: View on GitHub
       link: https://github.com/DominionCyber/talon_hunt_framework_docs
