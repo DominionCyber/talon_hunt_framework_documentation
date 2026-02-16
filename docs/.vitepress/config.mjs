@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Talon Hunt Framework",
   description: "Standardized CrowdStrike Falcon saved searches for threat hunting.",
-  base: '/talon_hunt_framework_docs/',
+  base: '/talon_hunt_framework_documentation//',
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
@@ -35,7 +35,7 @@ export default defineConfig({
       }
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework_docs' }
+      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework_documentation/' }
     ]
   }
 })
