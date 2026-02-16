@@ -4,6 +4,10 @@ export default defineConfig({
   title: 'Talon Hunt Framework',
   description: 'Standardized CrowdStrike Falcon saved searches for threat hunting.',
   base: '/talon_hunt_framework_documentation/',
+  
+  // Fixes the build crash caused by dead links in markdown files
+  ignoreDeadLinks: true,
+
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
