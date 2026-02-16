@@ -19,4 +19,4 @@ Talon leverages the power of **CrowdStrike Query Language (CQL)** to provide ana
 > "Talon ensures that your hunt and detection workflows remain consistent, version-controlled, and production-ready."
 
 ## Getting Started
-To begin using Talon, ensure you have access to your CrowdStrike Falcon instance and review the [Architecture](/guide/architecture) page.
+To begin using Talon, ensure you have access to your CrowdStrike Falcon instance and review the [Getting Started](/getting-started) page.
