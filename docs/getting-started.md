@@ -71,7 +71,7 @@ Note: Cradles do not need to be saved as standalone searches. Cradles function a
 In the Save Search dialog:
 
 - Enter the appropriate name.
-- Provide a structured description.
+- Provide a description.
 - Apply relevant labels consistent with Talon naming conventions.
 
 Click Save to finalize.
@@ -93,3 +93,5 @@ If utilizing lookup-based enrichment:
 3. Validate successful ingestion before executing dependent queries.
 
 For automated and repeatable deployments, API-based installation or the Dominion Cyber Installation Tool is strongly recommended.
+
+
