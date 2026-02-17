@@ -59,4 +59,6 @@ Utilities commonly integrate with the native `$falcon/helper:enrich` mechanism, 
 | falconPID := coalesce([ContextProcessId, RpcClientProcessId, WritingProcessId])
 ```
 
+::: tip Query Explanation
 This utility generates a normalized `falconPID` identifier by selecting the first available process identifier from the event context. The resulting field is used to correlate multiple independent telemetry events into a unified process-level investigative view presented to the analyst.
+:::
