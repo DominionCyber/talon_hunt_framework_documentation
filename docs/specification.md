@@ -5,8 +5,6 @@ This document defines the high-level schema and structural components of the **T
 - **Version:** 1.0.0  
 - **Release Date:** 2026-02-16  
 
----
-
 ## Core Saved Queries
 
 Core saved queries represent foundational schema components within the Talon Hunt Framework. These queries are not intended to be executed as standalone hunts. Instead, they provide platform-agnostic normalization, enrichment, and linkage logic that is consistently invoked by downstream detection and investigative searches.
@@ -15,8 +13,6 @@ Core queries are categorized into two functional groups:
 
 - **Converters**
 - **Utilities**
-
----
 
 ### Converters
 
