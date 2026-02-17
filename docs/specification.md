@@ -38,7 +38,7 @@ Converters perform deterministic transformations of machine-oriented fields into
 )
 ```
 
-::: info Query Explanation
+::: tip Query Explanation
 This converter normalizes sensor-provided epoch time into a formatted UTC timestamp suitable for consistent presentation across Talon hunts and reporting outputs.
 :::
 
