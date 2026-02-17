@@ -84,3 +84,27 @@ h1, h2, h3, h4, h5, h6, .title {
   justify-content: space-between;
   cursor: pointer;
   padding: 16p
+
+/* ── Talon Query Explanation Callout ───────────────────── */
+/* Used with: ::: info Query Explanation { .query } */
+
+.vp-doc .custom-block.query {
+  border-left: 4px solid var(--dc-pink); /* #FF6BFF */
+  background-color: rgba(255, 107, 255, 0.08);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 16px 0;
+}
+
+.vp-doc .custom-block.query .custom-block-title {
+  color: var(--dc-pink);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+.vp-doc .custom-block.query p {
+  margin: 0;
+  color: var(--vp-c-text-1);
+}
