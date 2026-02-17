@@ -40,7 +40,7 @@ export default defineConfig({
         text: 'THF Basics',
         items: [
           { text: 'Specification', link: '/specification' },
-          { text: 'Cradles', link: 'cradles' },
+          { text: 'Naming', link: 'naming' },
           { text: 'Lookups', link: 'lookups' },
           { text: 'Transforms', link: 'transforms' },
         ],
