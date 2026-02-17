@@ -1,22 +1,24 @@
 # Talon Hunt Framework Schema Specification
 
-This document defines the high-level schema and structural components of the **Talon Hunt Framework**. It describes the standardized format and organization of saved searches, lookup resources, and modular building blocks ("cradles") that collectively support the framework’s detection, enrichment, and investigative pipeline.
+This document defines the high-level schema and structural components of the **Talon Hunt Framework**. It describes the standardized format and organization of saved searches, lookup resources, and modular building blocks ("cradles") that collectively support the framework's detection, enrichment, and investigative pipeline.
 
 - **Version:** 1.0.0  
 - **Release Date:** 2026-02-16  
 
+---
+
 ## Core Saved Queries
 
-Core saved queries represent foundational schema components within the Talon Hunt Framework. These queries are not intended to be executed as standalone hunts. Instead, they provide platform-agnostic normalization, enrichment, and linkage logic that is consistently invoked by downstream detection and investigative searches.
+Core saved queries represent foundational schema components within the Talon Hunt Framework. These queries are not intended to be executed as standalone hunts. Instead, they provide platform-agnostic normalization, enrichment, and linkage logic that downstream detection and investigative searches invoke consistently.
 
 Core queries are categorized into two functional groups:
 
-- **Converters**
-- **Utilities**
+- **Converters** — Deterministic field transformations for analyst readability.
+- **Utilities** — Reusable identifiers and enrichment-ready event structures.
 
 ### Converters
 
-Converters perform deterministic transformations of machine-oriented fields into operator-friendly representations. These conversions improve analyst readability by translating raw telemetry values (for example, epoch timestamps or byte counts) into standardized human-readable formats.
+Converters perform deterministic transformations of machine-oriented fields into operator-friendly representations. These conversions improve analyst readability by translating raw telemetry values (for example, epoch timestamps or byte counts) into standardized, human-readable formats.
 
 **Example:** `talon_convert_time_utc`
 
@@ -42,7 +44,7 @@ This converter normalizes sensor-provided epoch time into a formatted UTC timest
 
 ### Utilities
 
-Utilities provide reusable functional fields and enrichment-ready event structures. These queries are designed to generate stable identifiers and schema-consistent fields that downstream searches can reference without requiring repeated field-specific logic.
+Utilities provide reusable functional fields and enrichment-ready event structures. These queries generate stable identifiers and schema-consistent fields that downstream searches can reference without requiring repeated field-specific logic.
 
 Utilities commonly integrate with the native `$falcon/helper:enrich` mechanism, enabling enrichment operations to be applied uniformly across eligible fields. This approach reduces query duplication, minimizes hunt complexity, and lowers the knowledge overhead required for analysts to leverage enrichment capabilities.
 
@@ -56,17 +58,24 @@ Utilities commonly integrate with the native `$falcon/helper:enrich` mechanism, 
 ```
 
 ::: details Query Explanation
-This utility generates a normalized `falconPID` identifier by selecting the first available process identifier from the event context. The resulting field is used to correlate multiple independent telemetry events into a unified process-level investigative view presented to the analyst.
+This utility generates a normalized `falconPID` identifier by selecting the first available process identifier from the event context. The resulting field is used to correlate multiple independent telemetry events into a unified, process-level investigative view presented to the analyst.
 :::
+
+---
 
 ## Transforms
 
-Transforms are responssible for field deconflictions, formatting field values to enhance readability or normalize values to improve or enhance for statistical analysis such as stack counting.
+Transforms are responsible for field deconfliction, value formatting to enhance readability, and value normalization to support statistical analysis techniques such as stack counting. Transforms are categorized into three functional groups:
 
-### Deconflitors
-Deconflictors are used, as the name states, to deconflict fields. Across Crowdstrike telemetry, there are field names that are repeated across events. This can become problematic when joining events together and field names step on eachother, and you won't be able to see each value produced by each respective event.
+- **Deconflictors** — Rename colliding field names to prevent data loss during event joins.
+- **Formatters** — Clean and reformat field values for improved readability.
+- **Normalizers** — Translate machine-readable numeric values into human-readable labels.
 
-A functional example of this is that a `ProcessRollup2` event has the field `FileName` and the event `PEFileWritten` has the same field named file name. Without deconflciting the fields, and joining them together, you would never be able to see the `FileName` of the `ProcessRollup2` event and the `PEFileWritten` event respectively. This is one nuance found in many field names across many data types within Crowdstrike telemetry. Refer to the query below for a functional example.
+### Deconflictors
+
+Deconflictors resolve field-name collisions that occur when joining events. Across CrowdStrike telemetry, identical field names appear in multiple event types. This becomes problematic when events are joined together: if field names overlap, values from one event overwrite those from another, and the analyst loses visibility into each event's respective data.
+
+As a practical example, a `ProcessRollup2` event contains the field `FileName`, and the `PEFileWritten` event contains its own `FileName` field. Without deconflicting these fields prior to joining, the analyst would be unable to distinguish the `FileName` value originating from `ProcessRollup2` from the one originating from `PEFileWritten`. This collision pattern is common across many field names and data types within CrowdStrike telemetry.
 
 **Example:** `talon_win_deconflict_pefilewritten`
 
@@ -79,14 +88,20 @@ A functional example of this is that a `ProcessRollup2` event has the field `Fil
   | PeFileSize := Size
   | PeTargetFileName := TargetFileName
 ```
+
 ::: details Query Explanation
-This query translates the `ProcessRollup2` native fields `FileName`, `FilePath`, `Size` into unique fields (not repeated across other events) to `PeFileName`, `PeFilePath` and `PeFileSize` respectively. This prevents the potential for field collision when using `match` queries to join events.
+This query renames the `PEFileWritten` native fields `FileName`, `FilePath`, `Size`, and `TargetFileName` to the unique aliases `PeFileName`, `PeFilePath`, `PeFileSize`, and `PeTargetFileName`, respectively. This prevents field collision when using `match` queries to join events.
 :::
 
-### Formatters
-Formatters are used to improve readability of event fields. Within CrowdStrike telemetry, certain events contain characters such as unicode characters, pilcrow characters, etc. that can make it hard for analysts to read. These aim to format the finished (table) output of a query to enhance readability and streamline analysis if used in external data analysis tools (such as Excel, PowerBI, LLMs).
+---
 
-A functional example of this is the event `CommandHistory` inserts a pilcrow character (¶) to separate commands that were run. By removing these, and inserting a new line character, the resulting value is less convoluted and easier to read. Refer to the functional example below:
+### Formatters
+
+Formatters improve the readability of event field values. Within CrowdStrike telemetry, certain events contain characters — such as Unicode characters, pilcrow characters (`¶`), and other delimiters — that can hinder analyst interpretation. Formatters clean the final table output of a query to enhance readability and streamline downstream analysis in external tools such as Excel, Power BI, or LLM-based workflows.
+
+As a practical example, the `CommandHistory` event inserts a pilcrow character (`¶`) to separate individual commands. Replacing these with newline characters produces a cleaner, more legible output.
+
+**Example:** `talon_win_format_commandhistory`
 
 ``` sql
   // =====================================================
@@ -99,14 +114,20 @@ A functional example of this is the event `CommandHistory` inserts a pilcrow cha
       as=CommandHistory
   )
 ```
+
 ::: details Query Explanation
 This query replaces the pilcrow character with a newline character to enhance readability of the `CommandHistory` field.
 :::
 
-### Normalizers
-Normalizers act as a tool to translate fields that are primarily machine readable (likely numerical values) into human readable output (what we as humans understand).
+---
 
-A functional example of this is the `NetworkConnectIP4` event has various fields such as `Protocol`, `ConnectionDirection` and `ConnectionFlags` that present themselves as numerical values. When focusing on the `Protocol` value, it may present itself as `6` which maps to the protocol of `TCP` being used for that respective network transaciton. Refer to the functional exmaple below:
+### Normalizers
+
+Normalizers translate fields that are primarily machine-readable (typically numeric values) into human-readable output that analysts can interpret without referencing external documentation.
+
+As a practical example, the `NetworkConnectIP4` event contains fields such as `Protocol`, `ConnectionDirection`, and `ConnectionFlags`, all of which present as numeric values. For the `Protocol` field, a value of `6` maps to the protocol `TCP`. Normalizers perform this translation inline.
+
+**Example:** `talon_win_normalize_networkconnectip4`
 
 ``` sql
   // =====================================================
@@ -147,12 +168,18 @@ A functional example of this is the `NetworkConnectIP4` event has various fields
       separator=", "
   )
 ```
+
 ::: details Query Explanation
-This query converts the numerical values of the `Protocol` and `ConnectonDirection` field values with the human readabile equivalent. In the case of `ConnectionFlags` it translates the numerical value into the respective human readable components via the Logscale `bitfield:extractFlagsAsString` function to create a new field called `ConnectionFlags_mask` where the human readable output is listed.
+This query converts the numeric values of the `Protocol` and `ConnectionDirection` fields to their human-readable equivalents. For the `ConnectionFlags` field, it translates the numeric value into its constituent flag components using the LogScale `bitfield:extractFlagsAsString` function, producing a new field called `ConnectionFlags_mask` that contains the human-readable flag labels.
 :::
 
+---
+
 ## Lookups
-Lookups are simply a CSV or JSON data set that is used for inline enrichment, or search inclusions/exclusion. These are generally used to search for a narrow, specific set of data, or filter out consistent unwanted data sets. An example CSV is provided below:
+
+Lookups are CSV or JSON data sets used for inline enrichment or search inclusion/exclusion filtering. They are typically employed to target a narrow, specific set of data or to filter out consistently unwanted records.
+
+**Example:** `rfc_exclusions.csv`
 
 ``` csv
 cidr_exclusion,name,category,rfc,description,notes
@@ -160,16 +187,25 @@ cidr_exclusion,name,category,rfc,description,notes
 172.16.0.0/12,Private-Use Class B,RFC 1918 Private,RFC 1918,Private network space - Class B equivalent,1M addresses - 172.16.0.0 to 172.31.255.255
 192.168.0.0/16,Private-Use Class C,RFC 1918 Private,RFC 1918,Private network space - Class C equivalent,65K addresses - most common home network range
 ```
+
 ::: details Query Explanation
-This lookup table provides a list of Class A, B and C network address CIDR ranges that could be utilized to drop unwanted network traffic from a `NetworkConnectIP4` query to reduce query result overhead improve efficacy. This is particularily useful when trying to search for external network connections.
+This lookup table provides a list of Class A, B, and C private network CIDR ranges that can be used to exclude internal network traffic from a `NetworkConnectIP4` query. Filtering these ranges reduces result volume and improves efficacy, particularly when searching for external network connections.
 :::
+
+---
 
 ## Cradles
 
-Cradles act as the building blocks and heart of the Talon Hunt Framework. These are to be used as a building block for analyst to use to create queries that leverage consistent field presentation, enrichment, normalization, formatting and deconflicting. The essence of this is to have consistency across queries to not only help streamline development, but also provide a consistent output to enhance automation and analysis efforts.
+Cradles are the primary building blocks of the Talon Hunt Framework. They provide analysts with reusable query templates that enforce consistent field presentation, enrichment, normalization, formatting, and deconfliction. The goal is to ensure uniformity across queries, which streamlines development and produces a consistent output schema that supports downstream automation and analysis. Cradles are categorized into two types:
+
+- **Query Cradle** — A single-event building block for deep-dive analysis of a specific event type.
+- **Match Cradle** — A multi-event building block that joins related events via the `defineTable` and `match` functions.
 
 ### Query Cradle
-The query cradle is a single event building block that can be utilized by analysts to deep dive into a specific event. Refer to the functional example below:
+
+The query cradle is a single-event building block that analysts can use to investigate a specific event type. It provides a standardized search template with built-in enrichment, normalization, and a predefined table output.
+
+**Example:** `talon_win_cradle_processrollup2`
 
 ``` sql
   // =====================================================
@@ -223,12 +259,18 @@ The query cradle is a single event building block that can be utilized by analys
       limit=max
   )
 ```
+
 ::: details Query Explanation
-This query provides the building blocks to search for `ProcessRollup2` events. It allows the analyst to add criteria under the `SEARCH` section and have consistent data presentation via the `table` function, which can be modified to include or exclude critical field information as-needed. This example searches for execution of the any process containing `bad.exe` within the `FileName` field.
+This query provides the building blocks to search for `ProcessRollup2` events. It allows the analyst to add criteria under the `SEARCH` section and receive consistent data presentation via the `table` function, which can be modified to include or exclude fields as needed. In this example, the query searches for any process execution where the `FileName` field contains `bad.exe`.
 :::
 
+---
+
 ### Match Cradle
-The match cradle is a multi-event building bock that allows for events to be joined together via usage of the `defineTable` function by joining on the generated `falconPID` field to link common events together. Necessary functions, such as field deconflicting is executed as part of the query operations to avoid field collision alongside various enhancements to improve readability/functionality.
+
+The match cradle is a multi-event building block that joins events together using the `defineTable` function, correlating them on the generated `falconPID` field to link related telemetry. Field deconfliction is executed as part of the query operations to prevent field collision, alongside various enrichments to improve readability and analytical functionality.
+
+**Example:** `talon_win_cradle_match_networkconnectip4_processrollup2`
 
 ``` sql
   // =====================================================
@@ -346,9 +388,50 @@ The match cradle is a multi-event building bock that allows for events to be joi
   // =====================================================
   // TABLE
   // =====================================================
-  | table([utc_time,ComputerName,UserName,GrandParentBaseFileName,ParentBaseFileName,FilePath,FileName,ContextBaseFileName,CommandLine,SHA256HashData,CallStackModules,HostUrl,RefererUrl,OriginalFilename,SessionId,ImageSubsystem,IntegrityLevel,CreateProcessType,ProcessCreateFlags,ProcessCreateFlags_mask,ProcessParameterFlags,ProcessParameterFlags_mask,ProcessSxsFlags,ProcessSxsFlags_mask,RawProcessId,Protocol,ConnectionDirection,ConnectionFlags,ConnectionFlags_mask,CommunityID,LocalIP,LocalPort,RemoteIP,RemotePort,RemoteIP.asn,RemoteIP.org,RemoteIP.country,RemoteIP.city])
+  | table(
+      [
+          utc_time,
+          ComputerName,
+          UserName,
+          GrandParentBaseFileName,
+          ParentBaseFileName,
+          FilePath,
+          FileName,
+          ContextBaseFileName,
+          CommandLine,
+          SHA256HashData,
+          CallStackModules,
+          HostUrl,
+          RefererUrl,
+          OriginalFilename,
+          SessionId,
+          ImageSubsystem,
+          IntegrityLevel,
+          CreateProcessType,
+          ProcessCreateFlags,
+          ProcessCreateFlags_mask,
+          ProcessParameterFlags,
+          ProcessParameterFlags_mask,
+          ProcessSxsFlags,
+          ProcessSxsFlags_mask,
+          RawProcessId,
+          Protocol,
+          ConnectionDirection,
+          ConnectionFlags,
+          ConnectionFlags_mask,
+          CommunityID,
+          LocalIP,
+          LocalPort,
+          RemoteIP,
+          RemotePort,
+          RemoteIP.asn,
+          RemoteIP.org,
+          RemoteIP.country,
+          RemoteIP.city
+      ]
+  )
 ```
-::: details Query Explanation
-This query provides the building blocks to search for `NetworkConnectIP4` events, store them in a temporary lookup via the `defineTable` function and leverage the `mactch` function to correlate the associated `ProcessRollup2` event via the generated `falconPID` field. This searches for network connections to `1.1.1.1` made by the process `bad.exe`.
-:::
 
+::: details Query Explanation
+This query provides the building blocks to search for `NetworkConnectIP4` events, store them in a temporary lookup via the `defineTable` function, and leverage the `match` function to correlate the associated `ProcessRollup2` event via the generated `falconPID` field. In this example, the query searches for network connections to `1.1.1.1` made by the process `bad.exe`.
+:::
