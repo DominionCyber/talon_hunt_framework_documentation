@@ -11,7 +11,7 @@ This document defines the standardized naming conventions used across all compon
 
 All Talon Hunt Framework components follow a structured naming pattern composed of ordered segments separated by underscores. The general format is:
 
-```
+```bash
 talon_<function>_<operating_system>_<description>
 ```
 
@@ -26,42 +26,52 @@ talon_<function>_<operating_system>_<description>
 
 ```mermaid
 graph LR
-    A(["talon"]) --> B(["function"])
-    B --> C(["operating system"])
-    C --> D(["description"])
+    A(["talon"])
 
-    B --> B1("convert")
-    B --> B2("utility")
-    B --> B3("hunt")
-    B --> B4("detect")
+    A --> B(["function"])
+
+    subgraph Platform_Agnostic [" Platform-Agnostic "]
+        direction TB
+        PA1("convert")
+        PA2("utility")
+        PA3("hunt")
+        PA4("detect")
+    end
+
+    subgraph OS_Specific [" OS-Specific "]
+        direction TB
+        OS1("format")
+        OS2("deconflict")
+        OS3("normalize")
+        OS4("match")
+        OS5("event ← query cradle")
+    end
+
+    B --> Platform_Agnostic
+    B --> OS_Specific
+
+    OS_Specific --> C(["operating system"])
 
     C --> C1("win")
     C --> C2("mac")
     C --> C3("lin")
 
-    B --> OS_Functions
-
-    subgraph OS_Functions [" OS-Specific Functions "]
-        direction TB
-        F1("format")
-        F2("deconflict")
-        F3("normalize")
-        F4("match")
-        F5("event ← query cradle")
-    end
+    Platform_Agnostic --> D(["description"])
+    C1 --> D
+    C2 --> D
+    C3 --> D
 
     classDef prefix fill:#04090E,stroke:#8425FA,stroke-width:3px,color:#E2E2E6,font-weight:bold
     classDef segment fill:#8425FA,stroke:#E2E2E6,stroke-width:2px,color:#E2E2E6,font-weight:bold
-    classDef option fill:#04090E,stroke:#8425FA,stroke-width:1.5px,color:#E2E2E6
+    classDef agnostic fill:#04090E,stroke:#8425FA,stroke-width:1.5px,color:#E2E2E6
     classDef os fill:#04090E,stroke:#F168FF,stroke-width:1.5px,color:#E2E2E6
-    classDef osfunc fill:#F168FF,stroke:#E2E2E6,stroke-width:2px,color:#04090E,font-weight:bold
-    classDef subgraphBox fill:#1a1a2e,stroke:#F168FF,stroke-width:2px,color:#E2E2E6
+    classDef osfunc fill:#F168FF,stroke:#E2E2E6,stroke-width:1.5px,color:#04090E,font-weight:bold
 
     class A prefix
     class B,C,D segment
-    class B1,B2,B3,B4 option
+    class PA1,PA2,PA3,PA4 agnostic
     class C1,C2,C3 os
-    class F1,F2,F3,F4,F5 osfunc
+    class OS1,OS2,OS3,OS4,OS5 osfunc
 
     linkStyle default stroke:#62666F,stroke-width:2px
 ```
@@ -74,7 +84,7 @@ graph LR
 
 Converters are platform-agnostic. The operating system segment is omitted.
 
-```
+```bash
 talon_convert_<description>
 ```
 
@@ -89,7 +99,7 @@ talon_convert_<description>
 
 Utilities are platform-agnostic. The operating system segment is omitted.
 
-```
+```bash
 talon_utility_<description>
 ```
 
@@ -104,7 +114,7 @@ talon_utility_<description>
 
 Formatters are OS-specific and target a particular field for readability improvements.
 
-```
+```bash
 talon_<os>_format_<field>
 ```
 
@@ -119,7 +129,7 @@ talon_<os>_format_<field>
 
 Deconflictors are OS-specific and target fields that require renaming to prevent collision during event joins.
 
-```
+```bash
 talon_<os>_deconflict_<field>
 ```
 
@@ -134,7 +144,7 @@ talon_<os>_deconflict_<field>
 
 Normalizers are OS-specific and translate machine-readable field values into human-readable labels.
 
-```
+```bash
 talon_<os>_normalize_<field>
 ```
 
@@ -149,7 +159,7 @@ talon_<os>_normalize_<field>
 
 Query cradles are OS-specific, single-event building blocks. The description identifies the target event type.
 
-```
+```bash
 talon_<os>_<event>
 ```
 
@@ -165,7 +175,7 @@ talon_<os>_<event>
 
 Match cradles are OS-specific, multi-event building blocks. The description identifies both the Layer 1 (L1) and Layer 2 (L2) events being joined.
 
-```
+```bash
 talon_<os>_match_<l1_event>_<l2_event>
 ```
 
@@ -180,7 +190,7 @@ talon_<os>_match_<l1_event>_<l2_event>
 
 Threat hunts are platform-agnostic investigation queries built on top of cradles and transforms.
 
-```
+```bash
 talon_hunt_<description>
 ```
 
@@ -195,7 +205,7 @@ talon_hunt_<description>
 
 Detections are platform-agnostic alerting queries designed to surface known-bad or high-confidence indicators.
 
-```
+```bash
 talon_detect_<description>
 ```
 
