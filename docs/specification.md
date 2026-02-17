@@ -198,7 +198,7 @@ cidr_exclusion,name,category,rfc,description,notes
 192.168.0.0/16,Private-Use Class C,RFC 1918 Private,RFC 1918,Private network space - Class C equivalent,65K addresses - most common home network range
 ```
 
-::: details Query Explanation
+::: details Lookup Explanation
 This lookup table provides a list of Class A, B, and C private network CIDR ranges that can be used to exclude internal network traffic from a `NetworkConnectIP4` query. Filtering these ranges reduces result volume and improves efficacy, particularly when searching for external network connections.
 :::
 
