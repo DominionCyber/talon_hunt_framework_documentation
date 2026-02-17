@@ -4,7 +4,7 @@ export default defineConfig({
   title: 'Talon Hunt Framework',
   description: 'Standardized CrowdStrike Falcon saved searches for threat hunting.',
   base: '/talon_hunt_framework_documentation/',
-
+  
   // Fixes the build crash caused by dead links in markdown files
   ignoreDeadLinks: true,
 
@@ -15,18 +15,17 @@ export default defineConfig({
       'link',
       {
         href: 'https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Oxanium:wght@400;500;600;700&display=swap',
-        rel: 'stylesheet'
-      }
-    ]
+        rel: 'stylesheet',
+      },
+    ],
   ],
-
   themeConfig: {
     logo: '/dc-long-white.png',
     siteTitle: false,
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started' },
-      { text: 'FAQs', link: '/faqs' }
+      { text: 'FAQs', link: '/faqs' },
     ],
     sidebar: [
       {
@@ -34,8 +33,8 @@ export default defineConfig({
         items: [
           { text: 'Introduction', link: '/introduction' },
           { text: 'Getting Started', link: '/getting-started' },
-          { text: 'FAQs', link: '/faqs' }
-        ]
+          { text: 'FAQs', link: '/faqs' },
+        ],
       },
       {
         text: 'THF Basics',
@@ -43,12 +42,12 @@ export default defineConfig({
           { text: 'Specification', link: '/specification' },
           { text: 'Cradles', link: 'cradles' },
           { text: 'Lookups', link: 'lookups' },
-          { text: 'Transforms', link: 'transforms' }
-        ]
-      }
+          { text: 'Transforms', link: 'transforms' },
+        ],
+      },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework' }
-    ]
-  }
+      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework' },
+    ],
+  },
 })
