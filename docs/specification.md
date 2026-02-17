@@ -9,7 +9,9 @@ This document defines the high-level schema and structural components of the **T
 
 ```mermaid
 graph TD
-    A[Talon Hunt Framework] --> B[Core Saved Queries]
+    A[Talon Hunt Framework]
+
+    A --> B[Core Saved Queries]
     A --> C[Transforms]
     A --> D[Lookups]
     A --> E[Cradles]
@@ -23,6 +25,24 @@ graph TD
 
     E --> E1[Query Cradle]
     E --> E2[Match Cradle]
+
+    classDef root fill:#04090E,stroke:#8425FA,color:#E2E2E6,font-weight:bold
+    classDef core fill:#8425FA,stroke:#62666F,color:#E2E2E6
+    classDef coreChild fill:#62666F,stroke:#8425FA,color:#E2E2E6
+    classDef transform fill:#F168FF,stroke:#62666F,color:#04090E
+    classDef transformChild fill:#62666F,stroke:#F168FF,color:#E2E2E6
+    classDef lookup fill:#8425FA,stroke:#62666F,color:#E2E2E6
+    classDef cradle fill:#F168FF,stroke:#62666F,color:#04090E
+    classDef cradleChild fill:#62666F,stroke:#F168FF,color:#E2E2E6
+
+    class A root
+    class B core
+    class B1,B2 coreChild
+    class C transform
+    class C1,C2,C3 transformChild
+    class D lookup
+    class E cradle
+    class E1,E2 cradleChild
 ```
 
 ## Core Saved Queries
