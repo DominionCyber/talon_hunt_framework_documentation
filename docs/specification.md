@@ -24,7 +24,7 @@ Converters perform deterministic transformations of machine-oriented fields into
 
 **Example:** `talon_convert_time_utc`
 
-```
+``` sql
 // =====================================================
 // CONVERSION
 // =====================================================
@@ -50,7 +50,7 @@ Utilities commonly integrate with the native `$falcon/helper:enrich` mechanism, 
 
 **Example:** `talon_utility_falcon_pid`
 
-```
+``` sql
 // =====================================================
 // UTILITY
 // =====================================================
