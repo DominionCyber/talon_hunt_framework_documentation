@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import container from 'markdown-it-container'
 
 export default defineConfig({
   title: 'Talon Hunt Framework',
@@ -19,6 +20,25 @@ export default defineConfig({
       },
     ],
   ],
+
+  markdown: {
+    config(md) {
+      md.use(container, 'query', {
+        render(tokens, idx) {
+          const token = tokens[idx]
+
+          if (token.nesting === 1) {
+            // Supports: ::: query Optional Title
+            const title = token.info.trim().slice('query'.length).trim() || 'Query Explanation'
+            return `<div class="custom-block query"><p class="custom-block-title">${title}</p>\n`
+          }
+
+          return `</div>\n`
+        },
+      })
+    },
+  },
+
   themeConfig: {
     logo: '/dc-long-white.png',
     siteTitle: false,
