@@ -1,66 +1,60 @@
-# Talon Hunt Framework — Schema Specification
+# Talon Hunt Framework Schema Specification
 
-This document defines the complete schema for the Talon Hunt Framework, covering all saved searches, lookup files, and building-block cradles that compose the framework's detection and enrichment pipeline.
+This document defines the high-level schema and structural components of the **Talon Hunt Framework**. It describes the standardized format and organization of saved searches, lookup resources, and modular building blocks ("cradles") that collectively support the framework’s detection, enrichment, and investigative pipeline.
 
-- Version 1.0.0
-- Release date 2026-02-16
-
----
-
-## Table of Contents
-
-- [1. Core](#_1-core)
-- [2. Transforms](#_2-transforms)
-  - [2a. Normalizers](#_2a-normalizers)
-  - [2b. Deconflict Transforms](#_2b-deconflict-transforms)
-  - [2c. Formatters](#_2c-formatters)
-- [3. Lookups](#_3-lookups)
-- [4. Cradles](#_4-cradles)
-  - [4a. Query Cradles](#_4a-query-cradles)
-  - [4b. Match Cradles](#_4b-match-cradles)
+- **Version:** 1.0.0  
+- **Release Date:** 2026-02-16  
 
 ---
 
-## 1. Core {#_1-core}
+## Core Saved Queries
 
-Core searches are foundational components that are never executed as standalone hunts. They provide normalization, enrichment, and linking logic that all downstream searches invoke to ensure consistent data representation across the framework. Core searches are organized into **Converters** and **Utilities**.
+Core saved queries represent foundational schema components within the Talon Hunt Framework. These queries are not intended to be executed as standalone hunts. Instead, they provide platform-agnostic normalization, enrichment, and linkage logic that is consistently invoked by downstream detection and investigative searches.
 
-All core searches target `https://schemas.humio.com/query/v0.6.0` and default to a 15-minute non-live time interval.
+Core queries are categorized into two functional groups:
+
+- **Converters**
+- **Utilities**
+
+---
 
 ### Converters
 
-Converters transform raw telemetry values into normalized, human-readable representations.
+Converters perform deterministic transformations of machine-oriented fields into operator-friendly representations. These conversions improve analyst readability by translating raw telemetry values (for example, epoch timestamps or byte counts) into standardized human-readable formats.
 
-<details>
-<summary><code>talon_convert_file_size</code> — Byte-to-human-readable file size conversion</summary>
+**Example:** `talon_convert_time_utc`
 
-| Property | Value |
-|----------|-------|
-| **Labels** | `talon_hunt_framework`, `asset`, `convert`, `file_size` |
+```
+// =====================================================
+// CONVERSION
+// =====================================================
+| utc_time := timestamp
+| formatTime(
+    format="%m-%d-%Y %H:%M:%S",
+    field=utc_time,
+    locale=en_US,
+    timezone=Z,
+    as=utc_time
+)
+```
 
-Converts raw byte values into human-readable file size strings using cascading thresholds. Coalesces `ModuleSize` and `Size` into a single `ByteSize` value, then applies unit conversion based on magnitude.
+This converter normalizes sensor-provided epoch time into a formatted UTC timestamp suitable for consistent presentation across Talon hunts and reporting outputs.
 
-| Threshold | Output |
-|-----------|--------|
-| ≥ 1 TB | `X.XX TB` |
-| ≥ 1 GB | `X.XX GB` |
-| ≥ 1 MB | `X.XX MB` |
-| > 1 KB | `X.XXX KB` |
-| Fallback | `X Bytes` |
+---
 
-**Input Fields:** `ModuleSize`, `Size` (coalesced) · **Output Field:** `CommonSize`
+### Utilities
 
-</details>
+Utilities provide reusable functional fields and enrichment-ready event structures. These queries are designed to generate stable identifiers and schema-consistent fields that downstream searches can reference without requiring repeated field-specific logic.
 
-<details>
-<summary><code>talon_convert_time_utc</code> — Timestamp-to-UTC string conversion</summary>
+Utilities commonly integrate with the native `$falcon/helper:enrich` mechanism, enabling enrichment operations to be applied uniformly across eligible fields. This approach reduces query duplication, minimizes hunt complexity, and lowers the knowledge overhead required for analysts to leverage enrichment capabilities.
 
-| Property | Value |
-|----------|-------|
-| **Labels** | `talon_hunt_framework`, `asset`, `convert`, `time` |
+**Example:** `talon_utility_falcon_pid`
 
-Converts the event `@timestamp` into a standardized UTC time string for consistent display and cross-event temporal correlation. Uses the `en_US` locale with an explicit UTC (`Z`) timezone.
+```
+// =====================================================
+// UTILITY
+// =====================================================
+| falconPID := coalesce([ContextProcessId, RpcClientProcessId, WritingProcessId])
+```
 
-**Output Format:** `MM-DD-YYYY HH:MM:SS` · **Output Field:** `utc_time`
-
-</details>
+This utility generates a normalized `falconPID` identifier by selecting the first available process identifier from the event context. The resulting field is used to correlate multiple independent telemetry events into a unified process-level investigative view presented to the analyst.
