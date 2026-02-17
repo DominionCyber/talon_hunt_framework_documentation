@@ -191,3 +191,22 @@ h1, h2, h3, h4, h5, h6, .title {
 .faq-item div[class*="language-"] {
   margin: 8px 0 !important;
 }
+
+/* ── Talon Query Explanation Callout ───────────────────── */
+
+.vp-doc .custom-block.query {
+  border-left: 4px solid var(--dc-pink);
+  background-color: rgba(255, 107, 255, 0.08);
+  border-radius: 8px;
+}
+
+.vp-doc .custom-block.query .custom-block-title {
+  color: var(--dc-pink);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.vp-doc .custom-block.query p {
+  color: var(--vp-c-text-1);
+}
