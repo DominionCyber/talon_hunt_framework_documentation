@@ -24,6 +24,48 @@ talon_<function>_<operating_system>_<description>
 
 > **Note:** The operating system segment is omitted for platform-agnostic components such as converters and utilities.
 
+```mermaid
+graph LR
+    A(["talon"]) --> B(["function"])
+    B --> C(["operating system"])
+    C --> D(["description"])
+
+    B --> B1("convert")
+    B --> B2("utility")
+    B --> B3("hunt")
+    B --> B4("detect")
+
+    C --> C1("win")
+    C --> C2("mac")
+    C --> C3("lin")
+
+    B --> OS_Functions
+
+    subgraph OS_Functions [" OS-Specific Functions "]
+        direction TB
+        F1("format")
+        F2("deconflict")
+        F3("normalize")
+        F4("match")
+        F5("event ← query cradle")
+    end
+
+    classDef prefix fill:#04090E,stroke:#8425FA,stroke-width:3px,color:#E2E2E6,font-weight:bold
+    classDef segment fill:#8425FA,stroke:#E2E2E6,stroke-width:2px,color:#E2E2E6,font-weight:bold
+    classDef option fill:#04090E,stroke:#8425FA,stroke-width:1.5px,color:#E2E2E6
+    classDef os fill:#04090E,stroke:#F168FF,stroke-width:1.5px,color:#E2E2E6
+    classDef osfunc fill:#F168FF,stroke:#E2E2E6,stroke-width:2px,color:#04090E,font-weight:bold
+    classDef subgraphBox fill:#1a1a2e,stroke:#F168FF,stroke-width:2px,color:#E2E2E6
+
+    class A prefix
+    class B,C,D segment
+    class B1,B2,B3,B4 option
+    class C1,C2,C3 os
+    class F1,F2,F3,F4,F5 osfunc
+
+    linkStyle default stroke:#62666F,stroke-width:2px
+```
+
 ---
 
 ## Component Naming Patterns
