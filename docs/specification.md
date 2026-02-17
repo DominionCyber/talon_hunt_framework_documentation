@@ -9,40 +9,37 @@ This document defines the high-level schema and structural components of the **T
 
 ```mermaid
 graph TD
-    A[Talon Hunt Framework]
+    A([Talon Hunt Framework])
 
-    A --> B[Core Saved Queries]
-    A --> C[Transforms]
-    A --> D[Lookups]
-    A --> E[Cradles]
+    A --> B([Core Saved Queries])
+    A --> C([Transforms])
+    A --> D([Lookups])
+    A --> E([Cradles])
 
-    B --> B1[Converters]
-    B --> B2[Utilities]
+    B --> B1(Converters)
+    B --> B2(Utilities)
 
-    C --> C1[Deconflictors]
-    C --> C2[Formatters]
-    C --> C3[Normalizers]
+    C --> C1(Deconflictors)
+    C --> C2(Formatters)
+    C --> C3(Normalizers)
 
-    E --> E1[Query Cradle]
-    E --> E2[Match Cradle]
+    E --> E1(Query Cradle)
+    E --> E2(Match Cradle)
 
-    classDef root fill:#04090E,stroke:#8425FA,color:#E2E2E6,font-weight:bold
-    classDef core fill:#8425FA,stroke:#62666F,color:#E2E2E6
-    classDef coreChild fill:#62666F,stroke:#8425FA,color:#E2E2E6
-    classDef transform fill:#F168FF,stroke:#62666F,color:#04090E
-    classDef transformChild fill:#62666F,stroke:#F168FF,color:#E2E2E6
-    classDef lookup fill:#8425FA,stroke:#62666F,color:#E2E2E6
-    classDef cradle fill:#F168FF,stroke:#62666F,color:#04090E
-    classDef cradleChild fill:#62666F,stroke:#F168FF,color:#E2E2E6
+    classDef root fill:#04090E,stroke:#8425FA,stroke-width:3px,color:#E2E2E6,font-weight:bold
+    classDef purple fill:#8425FA,stroke:#E2E2E6,stroke-width:2px,color:#E2E2E6,font-weight:bold
+    classDef pink fill:#F168FF,stroke:#E2E2E6,stroke-width:2px,color:#04090E,font-weight:bold
+    classDef purpleChild fill:#04090E,stroke:#8425FA,stroke-width:1.5px,color:#E2E2E6
+    classDef pinkChild fill:#04090E,stroke:#F168FF,stroke-width:1.5px,color:#E2E2E6
 
     class A root
-    class B core
-    class B1,B2 coreChild
-    class C transform
-    class C1,C2,C3 transformChild
-    class D lookup
-    class E cradle
-    class E1,E2 cradleChild
+    class B,D purple
+    class C,E pink
+    class B1,B2 purpleChild
+    class C1,C2,C3 pinkChild
+    class E1,E2 pinkChild
+
+    linkStyle default stroke:#62666F,stroke-width:2px
 ```
 
 ## Core Saved Queries
