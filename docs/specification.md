@@ -16,6 +16,8 @@ Core queries are categorized into two functional groups:
 
 ### Converters
 
+[Talon Hunt Framework - Converters](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/core/converters)
+
 Converters perform deterministic transformations of machine-oriented fields into operator-friendly representations. These conversions improve analyst readability by translating raw telemetry values (for example, epoch timestamps or byte counts) into standardized, human-readable formats.
 
 **Example:** `talon_convert_time_utc`
@@ -41,6 +43,8 @@ This converter normalizes sensor-provided epoch time into a formatted UTC timest
 ---
 
 ### Utilities
+
+[Talon Hunt Framework - Utilities](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/core/utilities)
 
 Utilities provide reusable functional fields and enrichment-ready event structures. These queries generate stable identifiers and schema-consistent fields that downstream searches can reference without requiring repeated field-specific logic.
 
@@ -69,9 +73,11 @@ Transforms are responsible for field deconfliction, value formatting to enhance 
 - **Formatters**: Clean and reformat field values for improved readability.
 - **Normalizers**: Translate machine-readable numeric values into human-readable labels.
 
-### Deconflictors
+### Deconflict
 
-Deconflictors resolve field-name collisions that occur when joining events. Across CrowdStrike telemetry, identical field names appear in multiple event types. This becomes problematic when events are joined together: if field names overlap, values from one event overwrite those from another, and the analyst loses visibility into each event's respective data.
+[Talon Hunt Framework - Deconflict](https://example.com](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/transforms/deconflict)
+
+Deconflict's resolve field-name collisions that occur when joining events. Across CrowdStrike telemetry, identical field names appear in multiple event types. This becomes problematic when events are joined together: if field names overlap, values from one event overwrite those from another, and the analyst loses visibility into each event's respective data.
 
 As a practical example, a `ProcessRollup2` event contains the field `FileName`, and the `PEFileWritten` event contains its own `FileName` field. Without deconflicting these fields prior to joining, the analyst would be unable to distinguish the `FileName` value originating from `ProcessRollup2` from the one originating from `PEFileWritten`. This collision pattern is common across many field names and data types within CrowdStrike telemetry.
 
@@ -94,6 +100,8 @@ This query renames the `PEFileWritten` native fields `FileName`, `FilePath`, `Si
 ---
 
 ### Formatters
+
+[Talon Hunt Framework - Formatters](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/transforms/formatters/windows)
 
 Formatters improve the readability of event field values. Within CrowdStrike telemetry, certain events contain characters (such as Unicode characters, pilcrow characters (`¶`), and other delimiters) that can hinder analyst interpretation. Formatters clean the final table output of a query to enhance readability and streamline downstream analysis in external tools such as Excel, Power BI, or LLM-based workflows.
 
@@ -120,6 +128,8 @@ This query replaces the pilcrow character with a newline character to enhance re
 ---
 
 ### Normalizers
+
+[Talon Hunt Framework - Normalizers](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/transforms/normalizers)
 
 Normalizers translate fields that are primarily machine-readable (typically numeric values) into human-readable output that analysts can interpret without referencing external documentation.
 
@@ -175,6 +185,8 @@ This query converts the numeric values of the `Protocol` and `ConnectionDirectio
 
 ## Lookups
 
+[Talon Hunt Framework - Lookups](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/lookups)
+
 Lookups are CSV or JSON data sets used for inline enrichment or search inclusion/exclusion filtering. They are typically employed to target a narrow, specific set of data or to filter out consistently unwanted records.
 
 **Example:** `rfc_exclusions.csv`
@@ -200,6 +212,8 @@ Cradles are the primary building blocks of the Talon Hunt Framework. They provid
 - **Match Cradle**: A multi-event building block that joins related events via the `defineTable` and `match` functions.
 
 ### Query Cradle
+
+[Talon Hunt Framework - Query Cradles](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/cradles/query)
 
 The query cradle is a single-event building block that analysts can use to investigate a specific event type. It provides a standardized search template with built-in enrichment, normalization, and a predefined table output.
 
@@ -265,6 +279,8 @@ This query provides the building blocks to search for `ProcessRollup2` events. I
 ---
 
 ### Match Cradle
+
+[Talon Hunt Framework - Match Cradles](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/cradles/match)
 
 The match cradle is a multi-event building block that joins events together using the `defineTable` function, correlating them on the generated `falconPID` field to link related telemetry. Field deconfliction is executed as part of the query operations to prevent field collision, alongside various enrichments to improve readability and analytical functionality.
 
