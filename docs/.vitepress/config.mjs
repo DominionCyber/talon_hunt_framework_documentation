@@ -15,9 +15,9 @@ export default defineConfig({
       'link',
       {
         href: 'https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Oxanium:wght@400;500;600;700&display=swap',
-        rel: 'stylesheet',
-      },
-    ],
+        rel: 'stylesheet'
+      }
+    ]
   ],
 
   themeConfig: {
@@ -26,7 +26,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started' },
-      { text: 'FAQs', link: '/faqs' },
+      { text: 'FAQs', link: '/faqs' }
     ],
     sidebar: [
       {
@@ -34,8 +34,8 @@ export default defineConfig({
         items: [
           { text: 'Introduction', link: '/introduction' },
           { text: 'Getting Started', link: '/getting-started' },
-          { text: 'FAQs', link: '/faqs' },
-        ],
+          { text: 'FAQs', link: '/faqs' }
+        ]
       },
       {
         text: 'THF Basics',
@@ -43,12 +43,12 @@ export default defineConfig({
           { text: 'Specification', link: '/specification' },
           { text: 'Cradles', link: 'cradles' },
           { text: 'Lookups', link: 'lookups' },
-          { text: 'Transforms', link: 'transforms' },
-        ],
-      },
+          { text: 'Transforms', link: 'transforms' }
+        ]
+      }
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework' },
-    ],
-  },
+      { icon: 'github', link: 'https://github.com/DominionCyber/talon_hunt_framework' }
+    ]
+  }
 })
