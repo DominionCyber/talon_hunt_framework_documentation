@@ -1,4 +1,4 @@
-# Talon Hunt Framework Schema Specification
+Schema Specification
 
 This document defines the high-level schema and structural components of the **Talon Hunt Framework**. It describes the standardized format and organization of saved searches, lookup resources, and modular building blocks ("cradles") that collectively support the framework's detection, enrichment, and investigative pipeline.
 
