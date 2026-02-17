@@ -11,8 +11,8 @@ Core saved queries represent foundational schema components within the Talon Hun
 
 Core queries are categorized into two functional groups:
 
-- **Converters** — Deterministic field transformations for analyst readability.
-- **Utilities** — Reusable identifiers and enrichment-ready event structures.
+- **Converters**: Deterministic field transformations for analyst readability.
+- **Utilities**: Reusable identifiers and enrichment-ready event structures.
 
 ### Converters
 
@@ -65,9 +65,9 @@ This utility generates a normalized `falconPID` identifier by selecting the firs
 
 Transforms are responsible for field deconfliction, value formatting to enhance readability, and value normalization to support statistical analysis techniques such as stack counting. Transforms are categorized into three functional groups:
 
-- **Deconflictors** — Rename colliding field names to prevent data loss during event joins.
-- **Formatters** — Clean and reformat field values for improved readability.
-- **Normalizers** — Translate machine-readable numeric values into human-readable labels.
+- **Deconflictors**: Rename colliding field names to prevent data loss during event joins.
+- **Formatters**: Clean and reformat field values for improved readability.
+- **Normalizers**: Translate machine-readable numeric values into human-readable labels.
 
 ### Deconflictors
 
@@ -95,7 +95,7 @@ This query renames the `PEFileWritten` native fields `FileName`, `FilePath`, `Si
 
 ### Formatters
 
-Formatters improve the readability of event field values. Within CrowdStrike telemetry, certain events contain characters — such as Unicode characters, pilcrow characters (`¶`), and other delimiters — that can hinder analyst interpretation. Formatters clean the final table output of a query to enhance readability and streamline downstream analysis in external tools such as Excel, Power BI, or LLM-based workflows.
+Formatters improve the readability of event field values. Within CrowdStrike telemetry, certain events contain characters (such as Unicode characters, pilcrow characters (`¶`), and other delimiters) that can hinder analyst interpretation. Formatters clean the final table output of a query to enhance readability and streamline downstream analysis in external tools such as Excel, Power BI, or LLM-based workflows.
 
 As a practical example, the `CommandHistory` event inserts a pilcrow character (`¶`) to separate individual commands. Replacing these with newline characters produces a cleaner, more legible output.
 
@@ -196,8 +196,8 @@ This lookup table provides a list of Class A, B, and C private network CIDR rang
 
 Cradles are the primary building blocks of the Talon Hunt Framework. They provide analysts with reusable query templates that enforce consistent field presentation, enrichment, normalization, formatting, and deconfliction. The goal is to ensure uniformity across queries, which streamlines development and produces a consistent output schema that supports downstream automation and analysis. Cradles are categorized into two types:
 
-- **Query Cradle** — A single-event building block for deep-dive analysis of a specific event type.
-- **Match Cradle** — A multi-event building block that joins related events via the `defineTable` and `match` functions.
+- **Query Cradle**: A single-event building block for deep-dive analysis of a specific event type.
+- **Match Cradle**: A multi-event building block that joins related events via the `defineTable` and `match` functions.
 
 ### Query Cradle
 
