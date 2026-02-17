@@ -3,7 +3,27 @@ Schema Specification
 This document defines the high-level schema and structural components of the **Talon Hunt Framework**. It describes the standardized format and organization of saved searches, lookup resources, and modular building blocks ("cradles") that collectively support the framework's detection, enrichment, and investigative pipeline.
 
 - **Version:** 1.0.0  
-- **Release Date:** 2026-02-16  
+- **Release Date:** 2026-02-16
+
+## Schema Overview
+
+```mermaid
+graph TD
+    A[Talon Hunt Framework] --> B[Core Saved Queries]
+    A --> C[Transforms]
+    A --> D[Lookups]
+    A --> E[Cradles]
+
+    B --> B1[Converters]
+    B --> B2[Utilities]
+
+    C --> C1[Deconflictors]
+    C --> C2[Formatters]
+    C --> C3[Normalizers]
+
+    E --> E1[Query Cradle]
+    E --> E2[Match Cradle]
+```
 
 ## Core Saved Queries
 
@@ -75,7 +95,7 @@ Transforms are responsible for field deconfliction, value formatting to enhance 
 
 ### Deconflict
 
-[Talon Hunt Framework - Deconflict](https://example.com](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/transforms/deconflict)
+[Talon Hunt Framework - Deconflict](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/transforms/deconflict)
 
 Deconflict's resolve field-name collisions that occur when joining events. Across CrowdStrike telemetry, identical field names appear in multiple event types. This becomes problematic when events are joined together: if field names overlap, values from one event overwrite those from another, and the analyst loses visibility into each event's respective data.
 
