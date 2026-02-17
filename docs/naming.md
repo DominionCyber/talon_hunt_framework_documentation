@@ -1,1 +1,179 @@
+# Talon Hunt Framework Naming Schema
 
+This document defines the standardized naming conventions used across all components of the Talon Hunt Framework. Consistent naming ensures that saved searches, transforms, and cradles are immediately identifiable by function, platform scope, and purpose.
+
+- **Version:** 1.0.0
+- **Release Date:** 2026-02-16
+
+---
+
+## Naming Convention Anatomy
+
+All Talon Hunt Framework components follow a structured naming pattern composed of ordered segments separated by underscores. The general format is:
+
+```
+talon_<function>_<operating_system>_<description>
+```
+
+| Segment | Required | Description |
+|---|---|---|
+| `talon` | Always | Framework prefix. Identifies the component as part of the Talon Hunt Framework. |
+| `<function>` | Always | Indicates the component type (e.g., `convert`, `utility`, `hunt`, `detect`). |
+| `<operating_system>` | Conditional | Platform designator included only for OS-specific components. Values: `win`, `mac`, `lin`. |
+| `<description>` | Always | A concise, lowercase label describing the component's target field, event, or purpose. |
+
+> **Note:** The operating system segment is omitted for platform-agnostic components such as converters and utilities.
+
+---
+
+## Component Naming Patterns
+
+### Converters
+
+Converters are platform-agnostic. The operating system segment is omitted.
+
+```
+talon_convert_<description>
+```
+
+| Example | Description |
+|---|---|
+| `talon_convert_time_utc` | Converts epoch time to formatted UTC timestamp. |
+| `talon_convert_bytes_mb` | Converts raw byte values to megabytes. |
+
+---
+
+### Utilities
+
+Utilities are platform-agnostic. The operating system segment is omitted.
+
+```
+talon_utility_<description>
+```
+
+| Example | Description |
+|---|---|
+| `talon_utility_falcon_pid` | Generates a normalized `falconPID` identifier. |
+| `talon_utility_falcon_helper` | Invokes the native Falcon enrichment helper. |
+
+---
+
+### Formatters
+
+Formatters are OS-specific and target a particular field for readability improvements.
+
+```
+talon_<os>_format_<field>
+```
+
+| Example | Description |
+|---|---|
+| `talon_win_format_callstackmodules` | Formats the `CallStackModules` field for readability. |
+| `talon_win_format_commandhistory` | Replaces pilcrow characters in `CommandHistory` with newlines. |
+
+---
+
+### Deconflictors
+
+Deconflictors are OS-specific and target fields that require renaming to prevent collision during event joins.
+
+```
+talon_<os>_deconflict_<field>
+```
+
+| Example | Description |
+|---|---|
+| `talon_win_deconflict_pefilewritten` | Renames `PEFileWritten` fields to avoid collision with `ProcessRollup2`. |
+| `talon_win_deconflict_dnsrequest` | Renames `DnsRequest` fields to avoid collision during joins. |
+
+---
+
+### Normalizers
+
+Normalizers are OS-specific and translate machine-readable field values into human-readable labels.
+
+```
+talon_<os>_normalize_<field>
+```
+
+| Example | Description |
+|---|---|
+| `talon_win_normalize_networkconnectip4` | Converts numeric protocol and direction values to labels. |
+| `talon_win_normalize_processrollup2` | Normalizes `ProcessRollup2` flag fields to readable masks. |
+
+---
+
+### Query Cradles
+
+Query cradles are OS-specific, single-event building blocks. The description identifies the target event type.
+
+```
+talon_<os>_<event>
+```
+
+| Example | Description |
+|---|---|
+| `talon_win_processrollup2` | Query cradle for `ProcessRollup2` events on Windows. |
+| `talon_mac_processrollup2` | Query cradle for `ProcessRollup2` events on macOS. |
+| `talon_lin_processrollup2` | Query cradle for `ProcessRollup2` events on Linux. |
+
+---
+
+### Match Cradles
+
+Match cradles are OS-specific, multi-event building blocks. The description identifies both the Layer 1 (L1) and Layer 2 (L2) events being joined.
+
+```
+talon_<os>_match_<l1_event>_<l2_event>
+```
+
+| Example | Description |
+|---|---|
+| `talon_win_match_networkconnectip4_processrollup2` | Joins `NetworkConnectIP4` (L1) with `ProcessRollup2` (L2) on Windows. |
+| `talon_lin_match_dnsrequest_processrollup2` | Joins `DnsRequest` (L1) with `ProcessRollup2` (L2) on Linux. |
+
+---
+
+### Threat Hunts
+
+Threat hunts are platform-agnostic investigation queries built on top of cradles and transforms.
+
+```
+talon_hunt_<description>
+```
+
+| Example | Description |
+|---|---|
+| `talon_hunt_suspicious_ps_execution` | Hunts for suspicious PowerShell execution patterns. |
+| `talon_hunt_lateral_movement_smb` | Hunts for lateral movement via SMB. |
+
+---
+
+### Detections
+
+Detections are platform-agnostic alerting queries designed to surface known-bad or high-confidence indicators.
+
+```
+talon_detect_<description>
+```
+
+| Example | Description |
+|---|---|
+| `talon_detect_cobalt_strike_beacon` | Detects Cobalt Strike beacon activity. |
+| `talon_detect_lsass_credential_dump` | Detects credential dumping from LSASS. |
+
+---
+
+## Quick Reference
+
+| Component | Pattern | OS Segment |
+|---|---|---|
+| Converter | `talon_convert_<description>` | No |
+| Utility | `talon_utility_<description>` | No |
+| Formatter | `talon_<os>_format_<field>` | Yes |
+| Deconflictor | `talon_<os>_deconflict_<field>` | Yes |
+| Normalizer | `talon_<os>_normalize_<field>` | Yes |
+| Query Cradle | `talon_<os>_<event>` | Yes |
+| Match Cradle | `talon_<os>_match_<l1_event>_<l2_event>` | Yes |
+| Threat Hunt | `talon_hunt_<description>` | No |
+| Detection | `talon_detect_<description>` | No |
