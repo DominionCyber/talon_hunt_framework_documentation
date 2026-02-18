@@ -5,6 +5,8 @@ This document defines the standardized naming conventions used across all compon
 - **Version:** 1.0.0
 - **Release Date:** 2026-02-16
 
+---
+
 ## Naming Convention Anatomy
 
 All Talon Hunt Framework components follow a structured naming pattern composed of ordered segments separated by underscores. The general format is:
@@ -32,8 +34,6 @@ graph LR
         direction TB
         PA1("convert")
         PA2("utility")
-        PA3("hunt")
-        PA4("detect")
     end
 
     subgraph OS_Specific [" OS-Specific "]
@@ -43,6 +43,8 @@ graph LR
         OS3("normalize")
         OS4("match")
         OS5("event ← query cradle")
+        OS6("hunt")
+        OS7("detect")
     end
 
     B --> Platform_Agnostic
@@ -67,12 +69,14 @@ graph LR
 
     class A prefix
     class B,C,D segment
-    class PA1,PA2,PA3,PA4 agnostic
+    class PA1,PA2 agnostic
     class C1,C2,C3 os
-    class OS1,OS2,OS3,OS4,OS5 osfunc
+    class OS1,OS2,OS3,OS4,OS5,OS6,OS7 osfunc
 
     linkStyle default stroke:#62666F,stroke-width:2px
 ```
+
+---
 
 ## Component Naming Patterns
 
@@ -89,6 +93,8 @@ talon_convert_<description>
 | `talon_convert_time_utc` | Converts epoch time to formatted UTC timestamp. |
 | `talon_convert_bytes_mb` | Converts raw byte values to megabytes. |
 
+---
+
 ### Utilities
 
 Utilities are platform-agnostic. The operating system segment is omitted.
@@ -101,6 +107,8 @@ talon_utility_<description>
 |---|---|
 | `talon_utility_falcon_pid` | Generates a normalized `falconPID` identifier. |
 | `talon_utility_falcon_helper` | Invokes the native Falcon enrichment helper. |
+
+---
 
 ### Formatters
 
@@ -115,6 +123,8 @@ talon_<os>_format_<field>
 | `talon_win_format_callstackmodules` | Formats the `CallStackModules` field for readability. |
 | `talon_win_format_commandhistory` | Replaces pilcrow characters in `CommandHistory` with newlines. |
 
+---
+
 ### Deconflictors
 
 Deconflictors are OS-specific and target fields that require renaming to prevent collision during event joins.
@@ -128,6 +138,8 @@ talon_<os>_deconflict_<field>
 | `talon_win_deconflict_pefilewritten` | Renames `PEFileWritten` fields to avoid collision with `ProcessRollup2`. |
 | `talon_win_deconflict_dnsrequest` | Renames `DnsRequest` fields to avoid collision during joins. |
 
+---
+
 ### Normalizers
 
 Normalizers are OS-specific and translate machine-readable field values into human-readable labels.
@@ -140,6 +152,8 @@ talon_<os>_normalize_<field>
 |---|---|
 | `talon_win_normalize_networkconnectip4` | Converts numeric protocol and direction values to labels. |
 | `talon_win_normalize_processrollup2` | Normalizes `ProcessRollup2` flag fields to readable masks. |
+
+---
 
 ### Query Cradles
 
@@ -155,6 +169,8 @@ talon_<os>_<event>
 | `talon_mac_processrollup2` | Query cradle for `ProcessRollup2` events on macOS. |
 | `talon_lin_processrollup2` | Query cradle for `ProcessRollup2` events on Linux. |
 
+---
+
 ### Match Cradles
 
 Match cradles are OS-specific, multi-event building blocks. The description identifies both the Layer 1 (L1) and Layer 2 (L2) events being joined.
@@ -168,31 +184,37 @@ talon_<os>_match_<l1_event>_<l2_event>
 | `talon_win_match_networkconnectip4_processrollup2` | Joins `NetworkConnectIP4` (L1) with `ProcessRollup2` (L2) on Windows. |
 | `talon_lin_match_dnsrequest_processrollup2` | Joins `DnsRequest` (L1) with `ProcessRollup2` (L2) on Linux. |
 
+---
+
 ### Threat Hunts
 
-Threat hunts are platform-agnostic investigation queries built on top of cradles and transforms.
+Threat hunts are OS-specific investigation queries built on top of cradles and transforms.
 
 ```bash
-talon_hunt_<description>
+talon_hunt_<os>_<description>
 ```
 
 | Example | Description |
 |---|---|
-| `talon_hunt_suspicious_ps_execution` | Hunts for suspicious PowerShell execution patterns. |
-| `talon_hunt_lateral_movement_smb` | Hunts for lateral movement via SMB. |
+| `talon_hunt_win_curl_custom_useragent` | Hunts for curl executions with custom user-agent strings on Windows. |
+| `talon_hunt_lin_lateral_movement_smb` | Hunts for lateral movement via SMB on Linux. |
+
+---
 
 ### Detections
 
-Detections are platform-agnostic alerting queries designed to surface known-bad or high-confidence indicators.
+Detections are OS-specific alerting queries designed to surface known-bad or high-confidence indicators.
 
 ```bash
-talon_detect_<description>
+talon_detect_<os>_<description>
 ```
 
 | Example | Description |
 |---|---|
-| `talon_detect_cobalt_strike_beacon` | Detects Cobalt Strike beacon activity. |
-| `talon_detect_lsass_credential_dump` | Detects credential dumping from LSASS. |
+| `talon_detect_win_cobalt_strike_beacon` | Detects Cobalt Strike beacon activity on Windows. |
+| `talon_detect_lin_lsass_credential_dump` | Detects credential dumping from LSASS on Linux. |
+
+---
 
 ## Quick Reference
 
@@ -205,5 +227,5 @@ talon_detect_<description>
 | Normalizer | `talon_<os>_normalize_<field>` | Yes |
 | Query Cradle | `talon_<os>_<event>` | Yes |
 | Match Cradle | `talon_<os>_match_<l1_event>_<l2_event>` | Yes |
-| Threat Hunt | `talon_hunt_<description>` | No |
-| Detection | `talon_detect_<description>` | No |
+| Threat Hunt | `talon_hunt_<os>_<description>` | Yes |
+| Detection | `talon_detect_<os>_<description>` | Yes |
