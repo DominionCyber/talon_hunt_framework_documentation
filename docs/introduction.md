@@ -1,7 +1,4 @@
----
-title: Introduction
----
-
+# Introduction to Talon
 Dominion Cyber’s Talon Hunt Framework is a curated library of CrowdStrike Falcon saved searches, packaged for native import into Falcon. It is designed to accelerate threat hunting, detection engineering, and incident response without requiring external tooling or dependencies.
 
 Talon is built on CrowdStrike Query Language (CQL) and provides a consistent structure for authoring, organizing, and maintaining detection and hunt content. By standardizing query patterns and naming conventions across teams, Talon enables repeatable, reviewable, and version-controlled workflows—supporting mature detection-as-code and hunting-as-code practices within CI/CD pipelines.
