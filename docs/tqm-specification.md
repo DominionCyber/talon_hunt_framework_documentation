@@ -1,21 +1,21 @@
-# Talon Manager Reference
-This page documents the CrowdStrike API endpoints and Talon Manager features used to manage saved queries and lookup files within your Falcon NGSIEM tenant.
+# Talon Query Manager Reference
+This page documents the CrowdStrike API endpoints and TQM features used to manage saved queries and lookup files within your Falcon NGSIEM tenant.
 
 ## CrowdStrike API Reference
 
-Talon Manager interacts with the following CrowdStrike API endpoints. This section is provided as a reference for anyone looking to understand the underlying API calls or build their own tooling on top of the same endpoints.
+TQM interacts with the following CrowdStrike API endpoints. This section is provided as a reference for anyone looking to understand the underlying API calls or build their own tooling on top of the same endpoints.
 
 ### Authentication
 
 **`POST /oauth2/token`**
 
-Every API request requires authorization via an OAuth2 Bearer token. Talon Manager's first call on startup is to this endpoint. The Client ID and Client Secret are sent as form data, and CrowdStrike returns a token that is valid for 30 minutes. All subsequent requests include this token in the `Authorization` header.
+Every API request requires authorization via an OAuth2 Bearer token. TQM's first call on startup is to this endpoint. The Client ID and Client Secret are sent as form data, and CrowdStrike returns a token that is valid for 30 minutes. All subsequent requests include this token in the `Authorization` header.
 
 ### Saved Query Operations
 
 **`GET /ngsiem-content/queries/savedqueries/v1`**: Retrieve Saved Query IDs
 
-This endpoint returns a list of saved query IDs that match a given filter. Talon Manager uses it to enumerate what currently exists in your tenant. For anything related to the Talon Hunt Framework, the naming convention prefixes every query with `talon_`, which makes filtering straightforward.
+This endpoint returns a list of saved query IDs that match a given filter. TQM uses it to enumerate what currently exists in your tenant. For anything related to the Talon Hunt Framework, the naming convention prefixes every query with `talon_`, which makes filtering straightforward.
 
 Available parameters:
 
@@ -128,7 +128,7 @@ The Saved Query Browser lets you search for and inspect saved queries that alrea
 
 The Saved Query Creator takes a LogScale YAML template file and pushes it into your NGSIEM tenant as a new saved query. The YAML must conform to the `https://schemas.humio.com/query/v0.6.0` schema, which is the same format used by the Talon Hunt Framework, Sigma conversions, and any other community content designed for CrowdStrike NGSIEM.
 
-**How it works:** You point the creator at a YAML file, either from your local filesystem or from a fetched repository. Talon Manager reads the file contents and sends them to the `POST /ngsiem-content/entities/savedqueries-template/v1` endpoint. CrowdStrike validates the YAML against its schema and, if it passes, creates the saved query in your tenant.
+**How it works:** You point the creator at a YAML file, either from your local filesystem or from a fetched repository. TQM reads the file contents and sends them to the `POST /ngsiem-content/entities/savedqueries-template/v1` endpoint. CrowdStrike validates the YAML against its schema and, if it passes, creates the saved query in your tenant.
 
 **Common use cases:**
 
@@ -166,7 +166,7 @@ The Saved Query Deleter removes saved queries from your NGSIEM tenant. Deletion 
 
 The Lookup File Creator uploads a file (typically CSV) into NGSIEM as a lookup table. Lookup files are used by saved queries to enrich, filter, or correlate event data against reference datasets. The Talon Hunt Framework, for example, ships with lookup files like `rfc_exclusions.csv` that provide standardized exclusion lists for common false-positive sources.
 
-**How it works:** You specify the filename and point the tool at the file on your local filesystem. Talon Manager sends the file content to the `POST /ngsiem-content/entities/lookupfiles/v1` endpoint, which creates the lookup file in your tenant under the specified filename.
+**How it works:** You specify the filename and point the tool at the file on your local filesystem. TQM sends the file content to the `POST /ngsiem-content/entities/lookupfiles/v1` endpoint, which creates the lookup file in your tenant under the specified filename.
 
 **Common use cases:**
 
@@ -178,7 +178,7 @@ The Lookup File Creator uploads a file (typically CSV) into NGSIEM as a lookup t
 
 The Lookup File Deleter removes a lookup file from NGSIEM by filename. Like saved query deletion, this is permanent.
 
-**How it works:** You provide the filename of the lookup file to remove. Talon Manager calls the `DELETE /ngsiem-content/entities/lookupfiles/v1` endpoint, and the file is deleted from the tenant.
+**How it works:** You provide the filename of the lookup file to remove. TQM calls the `DELETE /ngsiem-content/entities/lookupfiles/v1` endpoint, and the file is deleted from the tenant.
 
 **Common use cases:**
 
