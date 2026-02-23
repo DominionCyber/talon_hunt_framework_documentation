@@ -29,9 +29,38 @@ While API and tool-based deployments rely on external mechanisms for content imp
 > This is the preferred installation method that leverages Talon Query Manager. You assume all responsibility when using this tool.
 
 ### Step 1: Prerequisite Check
-Refer to the Talon Query Manager Prerequisites page for information on the proper API scope
+Refer to the Talon Query Manager Prerequisites page for information on the proper API scope [Talon Qery Manager - Prerequisites](https://dominioncyber.github.io/talon_hunt_framework_documentation/tqm-prerequisites.html)
 
-## Installation Method 1: Web GUI Deployment
+### Step 2: Authentication
+When running Talon Query Manager you will be prompted with a TUI-based program. The first step into gaining connectivity is navigating to the `Authentication` module.
+
+Once at the Authentication module you will be presented the following inputs:
+Environment: Select `US-1` or `US-2` depending on your region.
+Client ID: Insert your CrowdStrike API Client ID of the respective API key you wish to facilitate the setup of Talon.
+Client Secret: Insert your CrowdStrike API Client ID of the respective API key you wish to facilitate the setup of Talon.
+GitHub PAT: This is a `Personal Access Token` generated from GitHub. This is used to bypass request throttling that is implemented by GitHub. Non authenticated requests get limited to ~50 per hour.
+
+### Step 3: Talon Hunt Framework Installation
+When on the main menu, navigate to the `Talon Installer` module.
+
+Within the Talon Installer Module, you will presented the following inputs:
+Target Domain: This is your target search domain within Logscale. Default values are `all`, `falcon` and `third-party`. Dominion Cyber has determined that best practice is to install the Talon Hunt Framework to the `falcon` search domain.
+
+Once the search domain is selected, you are able to select which components of the Talon Hunt Framework you wish to install. This allows you to customize the installation to your organizatiosn needs. If you required more granular configuration options, please use the other TQM modules as needed to create your desired installation configuration.
+
+Once all necessary options are selected, proceed with `Stage Installation`.
+
+### Step 4: Installation Acknolwedgement
+The Talon Installer module is destructive by nature. This is a scortched earth approach to installtion queries and should only be used for a fresh installation. This will delete and rewrite queries with the latest information in the repository. To proceed with the installation confirm the action by typing `INSTALL` into the `Confirm Action` input.
+
+### Step 5: Confirmation
+After Talon Installer has successfully run, log into the Crowdstrike, navigate to `Advanced Search` and confirm that the saved queries have been successfully created in the `falcon` search domain.
+
+Once information is inserted, select "Submit" and TQM will proceed with conducting an authentication check. If successful, you will be redirected to the main menu.
+
+### Step 3: 
+
+## Installation Method 2: Web GUI Deployment
 
 > [!WARNING]
 > The Web GUI method is the least preferred deployment approach. Use it when API credentials cannot be obtained due to internal restrictions, or when granular manual control is required for customization. API-based deployment provides better consistency and repeatability.
@@ -102,7 +131,7 @@ If utilizing lookup-based enrichment:
 
 For automated and repeatable deployments, API-based installation or the Dominion Cyber Installation Tool is strongly recommended.
 
-## Installation Method 2: API Deployment (YAML Upload)
+## Installation Method 3: API Deployment (YAML Upload)
 
 This method uses the CrowdStrike API to upload Talon Hunt Framework YAML templates directly into Falcon. It is the preferred approach for repeatable deployments and automation.
 
