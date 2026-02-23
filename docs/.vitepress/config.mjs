@@ -44,7 +44,7 @@ export default withMermaid({
       {
         text: 'Talon Hunt Framework',
         items: [
-          { text: 'Overview', link: '/thf-overview' },
+          { text: 'Overview', link: '/thf-specification' },
           { text: 'Naming', link: 'naming' },
           { text: 'Lookups', link: 'lookups' },
           { text: 'Transforms', link: 'transforms' },
