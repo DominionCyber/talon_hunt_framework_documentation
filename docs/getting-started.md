@@ -25,6 +25,13 @@ There are three documented installation methods:
 While API and tool-based deployments rely on external mechanisms for content import, Talon can be fully deployed using only GUI access if necessary.
 
 ## Installation Method 1: Web GUI Deployment
+> [!WARNING]
+> This is the preferred installation method that leverages Talon Query Manager. You assume all responsibility when using this tool.
+
+### Step 1: Prerequisite Check
+Refer to the Talon Query Manager Prerequisites page for information on the proper API scope
+
+## Installation Method 1: Web GUI Deployment
 
 > [!WARNING]
 > The Web GUI method is the least preferred deployment approach. Use it when API credentials cannot be obtained due to internal restrictions, or when granular manual control is required for customization. API-based deployment provides better consistency and repeatability.
