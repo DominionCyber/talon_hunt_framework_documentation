@@ -39,6 +39,7 @@ export default withMermaid({
         text: 'Talon Query Manager',
         items: [
           { text: 'Overview', link: '/tqm-overview' },
+          { text: 'Overview', link: '/tqm-prerequisites' },
         ],
       },
       {
