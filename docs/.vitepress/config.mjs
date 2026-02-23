@@ -28,9 +28,8 @@ export default withMermaid({
     ],
     sidebar: [
       {
-        text: 'Overview',
+        text: 'Quick Start',
         items: [
-          { text: 'Introduction', link: '/introduction' },
           { text: 'Getting Started', link: '/getting-started' },
           { text: 'FAQs', link: '/faqs' },
         ],
@@ -46,6 +45,7 @@ export default withMermaid({
       {
         text: 'Talon Hunt Framework',
         items: [
+          { text: 'Overview', link: '/thf-overview' },
           { text: 'Specification', link: '/thf-specification' },
           { text: 'Naming', link: '/thf-naming' },
           { text: 'Usage', link: '/usage' },
