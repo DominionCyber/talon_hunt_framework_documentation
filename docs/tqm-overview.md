@@ -1,4 +1,13 @@
+# Talon Manager
+
+**Created and maintained by [Dominion Cyber](https://www.dominioncyber.net/)**
+
+::: danger
+> **Disclaimer:** Dominion Cyber provides this tool on an as-is basis and assumes no liability for its use. You are solely responsible for reviewing the source code, understanding its behavior, and determining whether it is appropriate for your environment. Do not run software you do not trust. Dominion Cyber is not responsible for any data loss, misconfigurations, unintended API calls, or any other consequences that may arise from using this tool.
+:::
+
 ## Overview
+
 Talon Manager is a cross-platform terminal user interface (TUI) application written in Go. It uses the [Bubble Tea](https://github.com/charmbracelet/bubbletea) framework to deliver an interactive, keyboard-driven front end that runs natively on Windows, macOS, and Linux without the need for a graphical desktop environment or web browser.
 
 Under the hood, Talon Manager communicates directly with the CrowdStrike Falcon API to manage saved searches and lookup files within NGSIEM (Next-Gen SIEM). All authentication is handled through the CrowdStrike OAuth2 flow, and every API interaction occurs over HTTPS against the CrowdStrike cloud you specify. There is no middleware, no external service dependency, and no data leaves your terminal other than what goes directly to CrowdStrike.
