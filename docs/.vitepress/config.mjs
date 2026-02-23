@@ -7,7 +7,7 @@ export default withMermaid({
 
   // Fixes the build crash caused by dead links in markdown files
   ignoreDeadLinks: true,
-  appearance: 'dark',
+  appearance: 'force-dark',
   head: [
     ['link', { rel: 'icon', href: '/talon_hunt_framework_documentation/favicon.ico' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
