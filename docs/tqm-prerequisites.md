@@ -22,8 +22,8 @@ GOOS=windows GOARCH=amd64 go build -o talon-manager.exe .
 ## API Credentials
 
 > **Required API Scopes:**
-> - NGSIEM Saved Queries -- Read and Write
-> - NGSIEM Lookup Files -- Read and Write
+> - NGSIEM Saved Queries: Read and Write
+> - NGSIEM Lookup Files: Read and Write
 
 Before using Talon Manager, you must provision an API client in your CrowdStrike Falcon console with the scopes listed above. Both read and write permissions are required for each scope. Without them, the tool will not be able to enumerate, create, update, or delete content.
 
