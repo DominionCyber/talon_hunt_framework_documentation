@@ -36,9 +36,16 @@ export default withMermaid({
         ],
       },
       {
-        text: 'THF Basics',
+        text: 'Talon Query Manager',
         items: [
-          { text: 'Specification', link: '/specification' },
+          { text: 'Overview', link: '/tqm-overview' },
+        ],
+      },
+    ],      
+      {
+        text: 'Talon Hunt Framework',
+        items: [
+          { text: 'Overview', link: '/thf-overview' },
           { text: 'Naming', link: 'naming' },
           { text: 'Lookups', link: 'lookups' },
           { text: 'Transforms', link: 'transforms' },
