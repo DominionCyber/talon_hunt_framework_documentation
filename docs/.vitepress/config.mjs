@@ -41,7 +41,6 @@ export default withMermaid({
           { text: 'Overview', link: '/tqm-overview' },
         ],
       },
-    ],      
       {
         text: 'Talon Hunt Framework',
         items: [
