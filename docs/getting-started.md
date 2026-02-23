@@ -1,4 +1,6 @@
 # Getting Started
+This guide walks you through the prerequisites and installation methods for deploying the Talon Hunt Framework into your CrowdStrike Falcon environment.
+
 ## Prerequisites
 
 Before deploying the Talon Hunt Framework, ensure the following requirements are met:
