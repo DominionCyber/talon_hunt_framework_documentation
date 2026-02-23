@@ -1,4 +1,5 @@
-Schema Specification
+# Talon Hunt Framework Overview
+This page defines the schema, structural components, and modular building blocks that make up the Talon Hunt Framework (THF).
 
 This document defines the high-level schema and structural components of the **Talon Hunt Framework**. It describes the standardized format and organization of saved searches, lookup resources, and modular building blocks ("cradles") that collectively support the framework's detection, enrichment, and investigative pipeline.
 
@@ -77,8 +78,6 @@ Converters perform deterministic transformations of machine-oriented fields into
 This converter normalizes sensor-provided epoch time into a formatted UTC timestamp suitable for consistent presentation across Talon hunts and reporting outputs.
 :::
 
----
-
 ### Utilities
 
 [Talon Hunt Framework - Utilities](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/core/utilities)
@@ -99,8 +98,6 @@ Utilities commonly integrate with the native `$falcon/helper:enrich` mechanism, 
 ::: details Query Explanation
 This utility generates a normalized `falconPID` identifier by selecting the first available process identifier from the event context. The resulting field is used to correlate multiple independent telemetry events into a unified, process-level investigative view presented to the analyst.
 :::
-
----
 
 ## Transforms
 
@@ -134,8 +131,6 @@ As a practical example, a `ProcessRollup2` event contains the field `FileName`, 
 This query renames the `PEFileWritten` native fields `FileName`, `FilePath`, `Size`, and `TargetFileName` to the unique aliases `PeFileName`, `PeFilePath`, `PeFileSize`, and `PeTargetFileName`, respectively. This prevents field collision when using `match` queries to join events.
 :::
 
----
-
 ### Formatters
 
 [Talon Hunt Framework - Formatters](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/transforms/formatters/windows)
@@ -161,8 +156,6 @@ As a practical example, the `CommandHistory` event inserts a pilcrow character (
 ::: details Query Explanation
 This query replaces the pilcrow character with a newline character to enhance readability of the `CommandHistory` field.
 :::
-
----
 
 ### Normalizers
 
@@ -218,8 +211,6 @@ As a practical example, the `NetworkConnectIP4` event contains fields such as `P
 This query converts the numeric values of the `Protocol` and `ConnectionDirection` fields to their human-readable equivalents. For the `ConnectionFlags` field, it translates the numeric value into its constituent flag components using the LogScale `bitfield:extractFlagsAsString` function, producing a new field called `ConnectionFlags_mask` that contains the human-readable flag labels.
 :::
 
----
-
 ## Lookups
 
 [Talon Hunt Framework - Lookups](https://github.com/DominionCyber/talon_hunt_framework/tree/main/framework/lookups)
@@ -238,8 +229,6 @@ cidr_exclusion,name,category,rfc,description,notes
 ::: details Lookup Explanation
 This lookup table provides a list of Class A, B, and C private network CIDR ranges that can be used to exclude internal network traffic from a `NetworkConnectIP4` query. Filtering these ranges reduces result volume and improves efficacy, particularly when searching for external network connections.
 :::
-
----
 
 ## Cradles
 
@@ -312,8 +301,6 @@ The query cradle is a single-event building block that analysts can use to inves
 ::: details Query Explanation
 This query provides the building blocks to search for `ProcessRollup2` events. It allows the analyst to add criteria under the `SEARCH` section and receive consistent data presentation via the `table` function, which can be modified to include or exclude fields as needed. In this example, the query searches for any process execution where the `FileName` field contains `bad.exe`.
 :::
-
----
 
 ### Match Cradle
 
