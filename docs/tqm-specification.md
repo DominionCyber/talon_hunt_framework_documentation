@@ -1,3 +1,6 @@
+# Talon Manager Reference
+This page documents the CrowdStrike API endpoints and Talon Manager features used to manage saved queries and lookup files within your Falcon NGSIEM tenant.
+
 ## CrowdStrike API Reference
 
 Talon Manager interacts with the following CrowdStrike API endpoints. This section is provided as a reference for anyone looking to understand the underlying API calls or build their own tooling on top of the same endpoints.
@@ -10,7 +13,7 @@ Every API request requires authorization via an OAuth2 Bearer token. Talon Manag
 
 ### Saved Query Operations
 
-**`GET /ngsiem-content/queries/savedqueries/v1`** -- Retrieve Saved Query IDs
+**`GET /ngsiem-content/queries/savedqueries/v1`**: Retrieve Saved Query IDs
 
 This endpoint returns a list of saved query IDs that match a given filter. Talon Manager uses it to enumerate what currently exists in your tenant. For anything related to the Talon Hunt Framework, the naming convention prefixes every query with `talon_`, which makes filtering straightforward.
 
@@ -25,7 +28,7 @@ Available parameters:
 
 The IDs returned by this endpoint are required for all downstream operations (retrieval, update, deletion).
 
-**`GET /ngsiem-content/entities/savedqueries-template/v1`** -- Retrieve Saved Query by ID
+**`GET /ngsiem-content/entities/savedqueries-template/v1`**: Retrieve Saved Query by ID
 
 Returns the full properties of a saved query, including its name, description, query string, labels, time interval, and visualization settings. This is used to inspect what a query actually contains once you have its ID.
 
@@ -36,7 +39,7 @@ Available parameters:
 | `string` | The saved query ID to retrieve. |
 | `search_domain` | The search domain context. Accepted values: `view`, `repo`. |
 
-**`POST /ngsiem-content/entities/savedqueries-template/v1`** -- Create Saved Query
+**`POST /ngsiem-content/entities/savedqueries-template/v1`**: Create Saved Query
 
 Creates a new saved query from a LogScale YAML template. The YAML must conform to the LogScale saved query schema at `https://schemas.humio.com/query/v0.6.0`.
 
@@ -47,7 +50,7 @@ Available parameters:
 | `search_domain` | The target search domain. |
 | `yaml_template` | The full YAML content of the saved query template. |
 
-**`PATCH /ngsiem-content/entities/savedqueries-template/v1`** -- Update Saved Query
+**`PATCH /ngsiem-content/entities/savedqueries-template/v1`**: Update Saved Query
 
 Overwrites an existing saved query with new YAML template content. The query is identified by its ID, and the new YAML replaces the old content entirely. The same schema requirements apply.
 
@@ -59,7 +62,7 @@ Available parameters:
 | `ids` | The ID of the saved query to update. |
 | `yaml_template` | The replacement YAML template content. Must conform to `https://schemas.humio.com/query/v0.6.0`. |
 
-**`DELETE /ngsiem-content/entities/savedqueries/v1`** -- Delete Saved Query
+**`DELETE /ngsiem-content/entities/savedqueries/v1`**: Delete Saved Query
 
 Permanently removes a saved query from the tenant.
 
@@ -72,7 +75,7 @@ Available parameters:
 
 ### Lookup File Operations
 
-**`GET /ngsiem-content/entities/lookupfiles/v1`** -- Retrieve Lookup File
+**`GET /ngsiem-content/entities/lookupfiles/v1`**: Retrieve Lookup File
 
 Retrieves a lookup file by its filename.
 
@@ -83,7 +86,7 @@ Available parameters:
 | `filename` | The filename of the lookup file. |
 | `search_domain` | The search domain context. |
 
-**`POST /ngsiem-content/entities/lookupfiles/v1`** -- Create Lookup File
+**`POST /ngsiem-content/entities/lookupfiles/v1`**: Create Lookup File
 
 Uploads a new lookup file (typically a CSV) into NGSIEM.
 
@@ -95,7 +98,7 @@ Available parameters:
 | `filename` | The filename to assign to the lookup file. |
 | `file` | The file content to upload. |
 
-**`DELETE /ngsiem-content/entities/lookupfiles/v1`** -- Delete Lookup File
+**`DELETE /ngsiem-content/entities/lookupfiles/v1`**: Delete Lookup File
 
 Permanently removes a lookup file from the tenant.
 
@@ -105,8 +108,6 @@ Available parameters:
 |---|---|
 | `filename` | The filename of the lookup file to delete. |
 | `search_domain` | The search domain context. |
-
----
 
 ## Feature Reference
 
