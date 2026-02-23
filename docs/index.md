@@ -7,11 +7,11 @@ hero:
   tagline: Streamlined threat hunting and detection engineering for CrowdStrike Falcon.
   actions:
     - theme: brand
-      text: Explore the Framework
-      link: /introduction
+      text: Get Started
+      link: /getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/DominionCyber/talon_hunt_framework_docs
+      link: https://github.com/DominionCyber/talon_hunt_framework
 
 features:
   - title: Native CQL Support
