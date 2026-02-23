@@ -1,4 +1,4 @@
-#Getting Started
+# Getting Started
 ## Prerequisites
 
 Before deploying the Talon Hunt Framework, ensure the following requirements are met:
@@ -92,6 +92,7 @@ If utilizing lookup-based enrichment:
 3. Validate successful ingestion before executing dependent queries.
 
 For automated and repeatable deployments, API-based installation or the Dominion Cyber Installation Tool is strongly recommended.
+
 ## Installation Method 2: API Deployment (YAML Upload)
 
 This method uses the CrowdStrike API to upload Talon Hunt Framework YAML templates directly into Falcon. It is the preferred approach for repeatable deployments and automation.
