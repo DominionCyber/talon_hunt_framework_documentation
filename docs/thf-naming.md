@@ -2,9 +2,6 @@
 
 This document defines the standardized naming conventions used across all components of the Talon Hunt Framework. Consistent naming ensures that saved searches, transforms, and cradles are immediately identifiable by function, platform scope, and purpose.
 
-- **Version:** 1.0.0
-- **Release Date:** 2026-02-16
-
 ## Naming Convention Anatomy
 
 All Talon Hunt Framework components follow a structured naming pattern composed of ordered segments separated by underscores. The general format is:
