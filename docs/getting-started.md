@@ -1,7 +1,4 @@
----
-title: Getting Started
----
-
+#Getting Started
 ## Prerequisites
 
 Before deploying the Talon Hunt Framework, ensure the following requirements are met:
