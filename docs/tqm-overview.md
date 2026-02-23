@@ -17,7 +17,7 @@ Talon Manager was built to address two distinct needs in the CrowdStrike ecosyst
 Installing and maintaining saved searches across a Falcon tenant by hand is tedious and error-prone, especially when dealing with frameworks that contain dozens or hundreds of interrelated queries. Talon Manager gives analysts and detection engineers a single tool to:
 
 - **Install** the Talon Hunt Framework
-- **Import** any valid YAML-based saved search — whether hosted on GitHub or stored locally
+- **Import** any valid YAML-based saved search whether hosted on GitHub or stored locally
 - **Manage** the full content lifecycle: creation, inspection, updates, and deletion
 
 The same applies to lookup files used by those queries.
