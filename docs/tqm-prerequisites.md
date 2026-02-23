@@ -1,3 +1,6 @@
+# Talon Manager Setup
+Before compiling and running Talon Manager, ensure your environment meets the build requirements and that the necessary CrowdStrike API credentials are provisioned.
+
 ## Prerequisites
 
 ### Go Installation
@@ -15,8 +18,6 @@ GOOS=windows GOARCH=amd64 go build -o talon-manager.exe .
 ```
 
 > **A note on endpoint protection:** Because Talon Manager is a locally compiled, unsigned binary, endpoint detection products (including CrowdStrike Falcon and Microsoft Defender) may flag it as suspicious. This is expected behavior. Unsigned executables without a Mark-of-the-Web lineage or a recognized code signing certificate will commonly trigger heuristic detections. You may need to create exclusions or allowlist the binary hash in your environment. This is another reason to read and understand the source code before running it.
-
----
 
 ## API Credentials
 
