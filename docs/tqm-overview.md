@@ -4,7 +4,7 @@ Talon Manager is a cross-platform terminal user interface (TUI) application writ
 Under the hood, Talon Manager communicates directly with the CrowdStrike Falcon API to manage saved searches and lookup files within NGSIEM (Next-Gen SIEM). All authentication is handled through the CrowdStrike OAuth2 flow, and every API interaction occurs over HTTPS against the CrowdStrike cloud you specify. There is no middleware, no external service dependency, and no data leaves your terminal other than what goes directly to CrowdStrike.
 
 The result is a single, self-contained binary that gives security teams a fast and repeatable way to manage their NGSIEM content library from the command line.
----
+
 ## Purpose
 
 Talon Manager was built to address two distinct needs in the CrowdStrike ecosystem:
